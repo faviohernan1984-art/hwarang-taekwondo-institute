@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Marcellus&family=Montserrat:wght@300;400;500&display=swap');
+
+:root {
+  color-scheme: dark;
+  font-family: 'Montserrat', Arial, sans-serif;
+  color: var(--hti-white);
+  background: var(--hti-black);
+  font-synthesis: none;
+  --hti-black: #050505;
+  --hti-charcoal: #0d0d0d;
+  --hti-dark-gray: #181818;
+  --hti-gray: #6e6e6e;
+  --hti-light-gray: #b8b8b8;
+  --hti-white: #f2f0eb;
+  --hti-red: #a30d18;
+  --hti-red-active: #c1121f;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; background: var(--hti-black); }
+body { margin: 0; min-width: 320px; overflow-x: hidden; background: var(--hti-black); }
+a { color: inherit; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+main { position: relative; isolation: isolate; background: var(--hti-black); }
+.home-photo { position: absolute; z-index: -3; inset: 0; overflow: hidden; pointer-events: none; }
+.home-photo img { position: sticky; top: 0; width: 100%; height: 100svh; object-fit: cover; object-position: 51% 47%; filter: brightness(.8) contrast(1.18) saturate(.56); }
+.institute { position: relative; min-height: 105svh; display: grid; place-items: center; padding: 9rem 7vw; background: linear-gradient(180deg, rgba(5,5,5,.68) 0%, rgba(5,5,5,.76) 30%, rgba(5,5,5,.83) 72%, rgba(5,5,5,.89) 100%), radial-gradient(circle at 50% 16%, rgba(13,13,13,.06) 0, rgba(13,13,13,.1) 48%, rgba(5,5,5,.14) 100%); }
+.institute__inner { width: min(980px, 100%); text-align: center; }
+.eyebrow { margin: 0 0 2rem; color: var(--hti-red); font-size: .7rem; letter-spacing: .48em; text-transform: uppercase; }
+.institute h2 { max-width: 900px; margin: 0 auto; font: 400 clamp(3rem, 7.5vw, 7.5rem)/.94 'Marcellus', Georgia, serif; letter-spacing: -.025em; text-transform: uppercase; }
+.institute h2 span { display: block; }
+.institute h2 span:last-child { margin-top: .08em; }
+.institute__copy { max-width: 630px; margin: 2.5rem auto 0; color: var(--hti-light-gray); font: 300 clamp(.95rem, 1.3vw, 1.15rem)/1.8 'Montserrat', sans-serif; }
+.future-anchors { height: 1px; overflow: hidden; background: rgba(5,5,5,.89); }
+
+.hero h1,
+.institute h2,
+.contact h2 {
+  background-color: var(--hti-white);
+  background-image:
+    radial-gradient(ellipse 88% 135% at 16% 14%, rgba(255,255,255,.58), transparent 56%),
+    radial-gradient(ellipse 78% 125% at 82% 76%, rgba(184,184,184,.32), transparent 62%),
+    linear-gradient(164deg, #fff 0%, var(--hti-white) 28%, #d1d1ce 58%, #f7f6f2 78%, #dededa 100%);
+  background-size: 165% 185%, 185% 165%, 100% 100%;
+  background-position: 5% 10%, 94% 88%, center;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 1px 1px rgba(0,0,0,.42), 0 4px 12px rgba(0,0,0,.2);
+}
+
+@media (max-width: 700px) { .home-photo img { object-position: 43% center; filter: brightness(.76) contrast(1.17) saturate(.54); } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }

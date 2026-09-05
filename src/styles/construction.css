@@ -1,4 +1,4 @@
-.construction { min-height: 100svh; display: grid; place-items: center; overflow: hidden; padding: 8rem 1.5rem 4rem; background: var(--hti-black); text-align: center; }
+.construction { min-height: 100svh; display: grid; place-items: center; padding: 8rem 1.5rem 4rem; background: var(--hti-black); text-align: center; }
 .construction__inner { width: min(720px, 100%); }
 .construction-art { display: block; width: min(430px, 82vw); height: auto; margin: 0 auto clamp(1rem, 2vh, 1.5rem); overflow: visible; perspective: 760px; }
 .construction-art .helmet { fill: url(#helmet-surface); stroke: #745522; stroke-width: 3; }
@@ -42,6 +42,16 @@
 }
 @keyframes construction-stripe { to { transform: translateX(2px); } }
 @keyframes construction-progress { from { transform: translateX(-100%); } to { transform: translateX(294%); } }
+@media (min-width: 1024px) and (max-width: 1600px) and (max-height: 900px) {
+  .construction { padding: 6rem 1.5rem 2rem; }
+  .construction-art { width: min(365px, 82vw); margin-bottom: .6rem; }
+  .construction__rule { margin-bottom: .9rem; }
+  .construction h1 { font-size: clamp(2.35rem, 5.4vw, 4.5rem); line-height: .96; }
+  .construction__copy { margin-top: 1rem; }
+  .construction__tagline { margin-top: .45rem; }
+  .construction__progress { margin-top: 1.25rem; }
+  .construction__back { margin-top: 1.25rem; padding-block: .45rem; }
+}
 @media (max-width: 700px) {
   .construction { padding: 7.5rem 1.25rem 3rem; }
   .construction-art { width: min(350px, 88vw); margin-bottom: .75rem; }

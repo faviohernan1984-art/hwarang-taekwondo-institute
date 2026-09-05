@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react'
 import '../styles/header.css'
 
 const links = [
-  ['Inicio', '#inicio'], ['Institute', '#institute'], ['Programas', '#programas'],
-  ['Sedes', '#sedes'], ['Historia', '#historia'], ['Galería', '#galeria'],
-  ['Contacto', '#contacto'],
+  ['Inicio', '/'], ['Institute', '/institute'], ['Programas', '/programas'],
+  ['Sedes', '/sedes'], ['Historia', '/historia'], ['Galería', '/galeria'],
+  ['Contacto', '/#contacto'],
 ]
 
 export default function Header() {
@@ -18,7 +18,7 @@ export default function Header() {
 
   return (
     <header className="site-header">
-      <a className="brand" href="#inicio" aria-label="Hwarang Taekwon-Do Institute, inicio">
+      <a className="brand" href="/" aria-label="Hwarang Taekwon-Do Institute, inicio">
         <span>Hwarang</span><small>Taekwon-Do Institute</small>
       </a>
       <button className="menu-toggle" type="button" aria-expanded={open} aria-controls="main-nav" onClick={() => setOpen(!open)}>

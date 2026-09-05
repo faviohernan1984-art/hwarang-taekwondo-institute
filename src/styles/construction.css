@@ -1,0 +1,56 @@
+.construction { min-height: 100svh; display: grid; place-items: center; overflow: hidden; padding: 8rem 1.5rem 4rem; background: var(--hti-black); text-align: center; }
+.construction__inner { width: min(720px, 100%); }
+.construction-art { display: block; width: min(430px, 82vw); height: auto; margin: 0 auto clamp(1rem, 2vh, 1.5rem); overflow: visible; perspective: 760px; }
+.construction-art .helmet { fill: url(#helmet-surface); stroke: #745522; stroke-width: 3; }
+.construction-art .helmet-side { fill: url(#helmet-side); }
+.construction-art .helmet-reflection { fill: url(#helmet-reflection); }
+.construction-art .helmet-ridge { fill: url(#helmet-rib); stroke: #5f451b; stroke-width: 3; stroke-linejoin: round; }
+.construction-art .helmet-brim { fill: url(#helmet-visor); stroke: #5f451b; stroke-width: 3; stroke-linejoin: round; }
+.construction-art .helmet-brim-light { fill: none; stroke: rgba(240,194,90,.72); stroke-width: 2; stroke-linecap: round; }
+.construction-art .helmet-brim-shadow { fill: #5f451b; opacity: .34; }
+.construction-art__helmet-shadow { fill: rgba(0,0,0,.42); transform-box: fill-box; transform-origin: center; animation: helmet-shadow 3.3s ease-in-out infinite; }
+.construction-art .barrier-board { fill: #b88a34; stroke: var(--hti-light-gray); stroke-width: 3; }
+.construction-art .barrier-stripes { fill: var(--hti-charcoal); opacity: .9; animation: construction-stripe 4.8s ease-in-out infinite alternate; }
+.construction-art .barrier-leg, .construction-art .barrier-foot { fill: var(--hti-dark-gray); stroke: var(--hti-gray); stroke-width: 2; }
+.construction-art .ground { fill: none; stroke: var(--hti-gray); stroke-width: 2; opacity: .42; }
+.construction__rule { width: 3.5rem; height: 1px; margin: 0 auto 1.35rem; background: var(--hti-red); }
+.construction h1 { margin: 0; color: var(--hti-white); font: 400 clamp(2.6rem, 6vw, 5rem)/1 'Marcellus', Georgia, serif; letter-spacing: -.02em; text-transform: uppercase; }
+.construction__copy { margin: 1.4rem 0 0; color: var(--hti-light-gray); font-size: clamp(.9rem, 1.2vw, 1.05rem); font-weight: 300; }
+.construction__tagline { margin: .65rem 0 0; color: var(--hti-gray); font-family: 'Marcellus', Georgia, serif; font-size: .83rem; letter-spacing: .12em; }
+.construction__progress { width: min(240px, 62vw); height: 1px; margin: 1.8rem auto 0; overflow: hidden; background: var(--hti-dark-gray); }
+.construction__progress i { display: block; width: 34%; height: 100%; background: var(--hti-red); animation: construction-progress 6s ease-in-out infinite alternate; }
+.construction__back { display: inline-block; margin-top: 2rem; border-bottom: 1px solid var(--hti-red); padding: .55rem .15rem; color: var(--hti-white); font-size: .6rem; letter-spacing: .24em; text-decoration: none; text-transform: uppercase; transition: color .2s ease, border-color .2s ease; }
+.construction__back:hover, .construction__back:focus-visible { border-color: var(--hti-red-active); color: var(--hti-red-active); }
+.construction-art__helmet { transform-box: fill-box; transform-origin: center; transform-style: preserve-3d; animation: helmetFlight 3.3s ease-in-out infinite; }
+@keyframes helmetFlight {
+  0% { transform: translate(0, 0) rotateY(0deg) rotateZ(0deg) scale(1); }
+  18% { transform: translate(-4px, -12px) rotateY(12deg) rotateZ(-6deg) scale(.99); }
+  42% { transform: translate(5px, -32px) rotateY(34deg) rotateZ(8deg) scale(.97); }
+  68% { transform: translate(7px, -16px) rotateY(18deg) rotateZ(-4deg) scale(.985); }
+  88% { transform: translate(1px, 1px) rotateY(2deg) rotateZ(1deg) scale(1.015); }
+  94% { transform: translate(0, -2px) rotateY(0deg) rotateZ(-1deg) scale(.995); }
+  100% { transform: translate(0, 0) rotateY(0deg) rotateZ(0deg) scale(1); }
+}
+@keyframes helmet-shadow {
+  0% { opacity: .55; transform: translateX(0) scaleX(1); }
+  18% { opacity: .38; transform: translateX(-2px) scaleX(.78); }
+  42% { opacity: .16; transform: translateX(2px) scaleX(.52); }
+  68% { opacity: .32; transform: translateX(3px) scaleX(.74); }
+  88% { opacity: .62; transform: translateX(1px) scaleX(1.08); }
+  94% { opacity: .5; transform: translateX(0) scaleX(.94); }
+  100% { opacity: .55; transform: translateX(0) scaleX(1); }
+}
+@keyframes construction-stripe { to { transform: translateX(2px); } }
+@keyframes construction-progress { from { transform: translateX(-100%); } to { transform: translateX(294%); } }
+@media (max-width: 700px) {
+  .construction { padding: 7.5rem 1.25rem 3rem; }
+  .construction-art { width: min(350px, 88vw); margin-bottom: .75rem; }
+  .construction h1 { font-size: clamp(2.35rem, 12vw, 3.4rem); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .construction-art__helmet, .construction-art__helmet-shadow, .barrier-stripes, .construction__progress i { animation: none; }
+  .construction-art__helmet { transform: none; }
+  .construction-art__helmet-shadow { opacity: .55; transform: none; }
+  .construction__progress i { transform: translateX(194%); }
+  .construction__back { transition: none; }
+}

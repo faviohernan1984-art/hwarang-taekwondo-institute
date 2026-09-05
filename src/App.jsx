@@ -1,12 +1,17 @@
 import Header from './components/Header.jsx'
 import Hero from './components/Hero.jsx'
 import Contact from './components/Contact.jsx'
+import ConstructionPage from './components/ConstructionPage.jsx'
+
+const constructionPaths = new Set(['/institute', '/programas', '/sedes', '/historia', '/galeria'])
 
 export default function App() {
+  const path = window.location.pathname.replace(/\/+$/, '') || '/'
+
   return (
     <div className="site">
       <Header />
-      <main>
+      {constructionPaths.has(path) ? <ConstructionPage /> : <main>
         <div className="home-photo">
           <img src="/images/hti-hero-original.jpg" alt="Alumnos de Hwarang practicando Taekwon-Do en el dojang" width="6000" height="4000" fetchPriority="high" />
         </div>
@@ -29,7 +34,7 @@ export default function App() {
           <span id="galeria" />
         </div>
         <Contact />
-      </main>
+      </main>}
     </div>
   )
 }

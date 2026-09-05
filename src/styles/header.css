@@ -10,7 +10,7 @@
 .menu-toggle { display: none; }
 @media (max-width: 940px) {
   .site-header { position: absolute; padding: 1.5rem; }
-  .brand span { display: inline-block; padding-right: .2em; }
+  .brand span { font-size: 1.1rem; padding-right: 0; }
   .menu-toggle { z-index: 2; display: grid; gap: 7px; width: 44px; height: 44px; place-content: center; border: 0; background: transparent; color: inherit; }
   .menu-toggle i { display: block; width: 25px; height: 1px; background: currentColor; transition: transform .25s; }
   .menu-toggle[aria-expanded='true'] i:first-of-type { transform: translateY(4px) rotate(45deg); }

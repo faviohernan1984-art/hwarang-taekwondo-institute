@@ -35,7 +35,7 @@ html:has(.evolution) {
 .evolution__scene--origin { background: #0e0e0e; }
 .evolution__scene--formation {
   background-color: #111110;
-  background-image: linear-gradient(rgba(8, 8, 8, .65), rgba(8, 8, 8, .69)), url('/images/formation-athletes.png');
+  background-image: linear-gradient(rgba(8, 8, 8, .80), rgba(8, 8, 8, .84)), url('/images/formation-athletes.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

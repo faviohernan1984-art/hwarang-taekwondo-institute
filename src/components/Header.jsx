@@ -3,7 +3,7 @@ import '../styles/header.css'
 
 const links = [
   ['Inicio', '/'], ['Institute', '/institute'], ['Programas', '/programas'],
-  ['Sedes', '/sedes'], ['Historia', '/historia'], ['Galería', '/galeria'],
+  ['Sedes', '/sedes'], ['Historia', '/historia'], ['Evolución', '/evolucion'], ['Galería', '/galeria'],
   ['Contacto', '/#contacto'],
 ]
 

@@ -67,6 +67,11 @@ function Scene({ index, variant, media = false, children }) {
 export default function EvolutionPage() {
   return (
     <main className="evolution">
+      <div className="evolution__mobile-background" aria-hidden="true">
+        <span />
+        <span />
+        <span />
+      </div>
       <Scene index={0} variant="revelation">
         <p className="evolution__eyebrow">EVOLUCIÓN INSTITUCIONAL</p>
         <h1 id="evolution-evolucion-title" className="evolution__revelation-title">

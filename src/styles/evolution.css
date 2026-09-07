@@ -33,7 +33,13 @@ html:has(.evolution) {
   background: radial-gradient(ellipse at 75% 28%, rgba(184,184,184,.045), transparent 65%), var(--hti-black);
 }
 .evolution__scene--origin { background: #0e0e0e; }
-.evolution__scene--formation { background: #111110; }
+.evolution__scene--formation {
+  background-color: #111110;
+  background-image: linear-gradient(rgba(8, 8, 8, .65), rgba(8, 8, 8, .69)), url('/images/formation-athletes.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 .evolution__scene--innovation { background: #0b0b0b; }
 .evolution__scene--essence { background: #101010; }
 
@@ -121,6 +127,50 @@ html:has(.evolution) {
   .evolution__navigation { column-gap: .75rem; font-size: .65rem; letter-spacing: .05em; }
   .evolution__navigation a { white-space: nowrap; gap: .4rem; min-width: 48px; }
   .evolution__scene--essence .evolution__premise { font-size: .82rem; margin-bottom: 1.25rem; }
+}
+
+/* Mobile photography belongs to the full seven-scene narrative, never a scene. */
+.evolution__mobile-background { display: none; }
+@media (max-width: 940px) {
+  .evolution { position: relative; isolation: isolate; }
+  .evolution > .evolution__scene { background: transparent; }
+  .evolution__mobile-background {
+    display: block;
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    background: #080808;
+  }
+  .evolution__mobile-background > span {
+    position: absolute;
+    inset-inline: 0;
+    /* Equal scale: one global third plus 2% overlap at each end. */
+    height: calc(100% / 3 + 4%);
+    background: url('/images/formation-athletes.png') var(--athlete-x) center / cover no-repeat;
+    mask-image: linear-gradient(to bottom, transparent, #000 10.715%, #000 89.285%, transparent);
+  }
+  .evolution__mobile-background > span:nth-child(1) {
+    top: -2%;
+    --athlete-x: 50%;
+    mask-image: linear-gradient(to bottom, #000 89.285%, transparent);
+  }
+  .evolution__mobile-background > span:nth-child(2) {
+    top: calc(100% / 3 - 2%);
+    --athlete-x: 86%;
+  }
+  .evolution__mobile-background > span:nth-child(3) {
+    top: calc(200% / 3 - 2%);
+    --athlete-x: 14%;
+    mask-image: linear-gradient(to bottom, transparent, #000 10.715%);
+  }
+  .evolution__mobile-background::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(rgba(8, 8, 8, .65), rgba(8, 8, 8, .69));
+  }
 }
 
 /* Tablet and mobile keep document scrolling completely free. */

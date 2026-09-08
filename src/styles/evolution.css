@@ -198,6 +198,25 @@ html:has(.evolution) {
   }
 }
 
+/* Innovation photography is exclusive to desktop and notebook. */
+@media (min-width: 941px) {
+  .evolution__scene--innovation > .evolution__media { overflow: hidden; }
+  .evolution__scene--innovation > .evolution__media::before,
+  .evolution__scene--innovation > .evolution__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+  .evolution__scene--innovation > .evolution__media::before {
+    background: url('/images/evolution/innovation-competition.JPG') center 60% / cover no-repeat;
+    transform: scale(1.18);
+    transform-origin: center 60%;
+  }
+  .evolution__scene--innovation > .evolution__media::after {
+    background: linear-gradient(rgba(8, 8, 8, .75), rgba(8, 8, 8, .79));
+  }
+}
+
 /* Desktop: a framed editorial spread, not a stack of oversized sections. */
 @media (min-width: 941px) {
   .evolution__scene { gap: 2rem; }

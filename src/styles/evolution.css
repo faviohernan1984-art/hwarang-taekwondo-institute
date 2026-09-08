@@ -179,6 +179,25 @@ html:has(.evolution) {
   .evolution__scene--revelation .evolution__composition { gap: 2.5rem; }
 }
 
+/* Approved origin photography is exclusive to desktop and notebook. */
+@media (min-width: 941px) {
+  .evolution__scene--origin > .evolution__media { overflow: hidden; }
+  .evolution__scene--origin > .evolution__media::before,
+  .evolution__scene--origin > .evolution__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+  .evolution__scene--origin > .evolution__media::before {
+    background: url('/images/evolution/IMG_0538.JPG') 45% 80% / cover no-repeat;
+    transform: scale(1.25);
+    transform-origin: 45% 80%;
+  }
+  .evolution__scene--origin > .evolution__media::after {
+    background: linear-gradient(rgba(8, 8, 8, .75), rgba(8, 8, 8, .79));
+  }
+}
+
 /* Desktop: a framed editorial spread, not a stack of oversized sections. */
 @media (min-width: 941px) {
   .evolution__scene { gap: 2rem; }

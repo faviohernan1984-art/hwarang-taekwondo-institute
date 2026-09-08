@@ -299,3 +299,35 @@ html:has(.evolution) {
   html:has(.evolution) { scroll-behavior: auto; scroll-snap-type: none; }
   .evolution__cta { transition: none; }
 }
+
+/* Independent instructors layer for desktop and notebook only. */
+@media (min-width: 941px) {
+  .evolution__scene--essence::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    left: 0;
+    bottom: 2rem;
+    height: 106svh;
+    max-height: 106svh;
+    width: 82vw;
+    background-image: url('/images/evolution/evolution-essence-instructors.png');
+    background-position: left bottom;
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.34;
+    pointer-events: none;
+  }
+}
+
+/* Matte studio floor: light stays confined to the lower third. */
+@media (min-width: 941px) {
+  .evolution__scene--essence {
+    background-color: #0b0b0b;
+    background-image:
+      linear-gradient(to right, #070707 0%, transparent 28%, transparent 72%, #080808 100%),
+      radial-gradient(ellipse 32% 8% at 50% 88%, rgba(255, 255, 255, 0.075) 0%, rgba(255, 255, 255, 0.025) 40%, transparent 100%),
+      radial-gradient(ellipse 18% 6% at 78% 87%, rgba(255, 255, 255, 0.025) 0%, rgba(255, 255, 255, 0.008) 45%, transparent 100%),
+      linear-gradient(to bottom, #0b0b0b 0%, #0d0d0d 66%, #151515 70%, #181818 88%, #080808 100%);
+  }
+}

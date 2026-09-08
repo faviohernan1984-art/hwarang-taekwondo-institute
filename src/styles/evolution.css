@@ -217,6 +217,19 @@ html:has(.evolution) {
   }
 }
 
+/* The complete essence athlete sits near the scene bottom on desktop only. */
+@media (min-width: 941px) {
+  .evolution__scene--essence > .evolution__media {
+    top: auto;
+    bottom: 3rem;
+    height: 94svh;
+    max-height: 94svh;
+    background: url('/images/evolution/evolution-essence-athlete.png') calc(100% + 10vw) bottom / contain no-repeat;
+    opacity: 0.42;
+    mix-blend-mode: screen;
+  }
+}
+
 /* Desktop: a framed editorial spread, not a stack of oversized sections. */
 @media (min-width: 941px) {
   .evolution__scene { gap: 2rem; }

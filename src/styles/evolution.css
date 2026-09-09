@@ -378,3 +378,29 @@ html:has(.evolution) {
     background: rgba(0, 0, 0, 0.78);
   }
 }
+
+/* Institutional closing photography, exclusive to desktop and notebook. */
+@media (min-width: 941px) {
+  .evolution__scene--closing { overflow: hidden; }
+  .evolution__scene--closing::before,
+  .evolution__scene--closing::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .evolution__scene--closing::before {
+    z-index: -2;
+    background-image: url('/images/evolution/evolution-closing-mentorship.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center bottom;
+    transform: translateY(10svh) scale(1.12);
+    transform-origin: center bottom;
+  }
+  .evolution__scene--closing::after {
+    z-index: -1;
+    background-color: rgba(0, 0, 0, 0.72);
+    background-image: radial-gradient(ellipse 38% 44% at 43% 32%, rgba(255, 250, 242, 0.07) 0%, rgba(255, 250, 242, 0.03) 45%, rgba(255, 250, 242, 0) 100%);
+  }
+}

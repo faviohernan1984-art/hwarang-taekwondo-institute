@@ -353,3 +353,28 @@ html:has(.evolution) {
     background-color: rgba(0, 0, 0, 0.80);
   }
 }
+
+/* Institutional opening photography, exclusive to desktop and notebook. */
+@media (min-width: 941px) {
+  .evolution__scene--revelation { overflow: hidden; }
+  .evolution__scene--revelation::before,
+  .evolution__scene--revelation::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .evolution__scene--revelation::before {
+    z-index: -2;
+    background-image: url('/images/evolution/evolution-institutional-origin.JPG');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    transform: translate(4vw, -18svh) scale(1.40);
+    transform-origin: center center;
+  }
+  .evolution__scene--revelation::after {
+    z-index: -1;
+    background: rgba(0, 0, 0, 0.78);
+  }
+}

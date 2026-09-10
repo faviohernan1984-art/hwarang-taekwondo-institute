@@ -52,16 +52,31 @@
 .sedes__schedule dl { margin: 0; }
 .sedes__time { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .25rem 1rem; padding-block: .65rem; border-bottom: 1px solid rgba(242,240,235,.13); }
 .sedes__time dd { margin: 0; color: var(--hti-light-gray); font-variant-numeric: tabular-nums; white-space: nowrap; }
-.sedes__consult { display: inline-flex; justify-content: space-between; align-items: center; gap: 1rem; min-height: 48px; margin-top: 1.5rem; padding-block: .5rem; color: var(--hti-white); text-decoration: underline; text-decoration-color: var(--hti-red); text-underline-offset: .45em; }
+.sedes__consult { display: inline-flex; justify-content: space-between; align-items: center; gap: 1rem; min-height: 54px; margin-top: 1.5rem; padding: .875rem 1.25rem; border: 1px solid var(--hti-red); background: rgba(5,5,5,.55); color: #fff; text-decoration: none; transition: background-color .2s, border-color .2s; }
 .sedes__location { display: grid; gap: 1.5rem; align-items: center; padding-block: 2.5rem; border-block: 1px solid rgba(242,240,235,.2); }
 .sedes__location h2 { font-size: clamp(2rem, 3vw, 2.75rem); }
 .sedes__location address { margin-top: 1rem; font-style: normal; color: var(--hti-light-gray); }
+
 .sedes__button { display: inline-flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 54px; max-width: 100%; padding: 1rem 1.25rem; border: 1px solid var(--hti-red); color: var(--hti-white); font-size: .8rem; font-weight: 500; line-height: 1.6; letter-spacing: .08em; text-decoration: none; transition: background-color .2s, border-color .2s; }
 .sedes__button span, .sedes__consult span { flex: none; }
 .sedes__button--secondary { border-color: var(--hti-light-gray); justify-self: start; }
 .sedes__button:hover { background: var(--hti-dark-gray); border-color: var(--hti-red-active); }
 .sedes__button--secondary:hover { border-color: var(--hti-white); }
-.sedes__consult:hover { color: var(--hti-white); text-decoration-color: var(--hti-red-active); }
+.sedes__location-actions { display: grid; grid-auto-rows: 1fr; gap: .75rem; width: min(100%, 25rem); }
+.sedes__location-actions .sedes__button { width: 100%; height: 100%; }
+.sedes__location-actions .sedes__button,
+.sedes__contact .sedes__button { background: var(--hti-red); border-color: var(--hti-red); color: #fff; }
+.sedes__location-actions .sedes__button:hover,
+.sedes__location-actions .sedes__button:focus-visible,
+.sedes__contact .sedes__button:hover,
+.sedes__contact .sedes__button:focus-visible { background: var(--hti-red-active); border-color: var(--hti-red-active); }
+
+.sedes__consult span { transition: transform .2s ease; }
+.sedes__consult:hover, .sedes__consult:focus-visible { background: var(--hti-red); color: #fff; }
+.sedes__consult:hover span, .sedes__consult:focus-visible span { transform: translate(3px, -3px); }
+@media (max-width: 700px) {
+  .sedes__consult { width: 100%; }
+}
 .sedes a:focus-visible { outline: 2px solid var(--hti-red-active); outline-offset: 5px; }
 .sedes__closing { display: grid; gap: 2rem; padding-top: 3rem; }
 .sedes__contact { max-width: 38rem; color: var(--hti-light-gray); }
@@ -137,5 +152,6 @@
   .sedes__opening::before { background-image: url('/images/sede-la-maquina-exterior.webp'); background-position: 49% center; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .sedes__button { transition: none; }
+  .sedes__button, .sedes__consult, .sedes__consult span { transition: none; }
+  .sedes__consult:hover span, .sedes__consult:focus-visible span { transform: none; }
 }

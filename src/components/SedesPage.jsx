@@ -106,7 +106,10 @@ export default function SedesPage() {
             <h2 id="sedes-location-title">{sede.name}</h2>
             <address>{sede.address}</address>
           </div>
-          <a className="sedes__button sedes__button--secondary" href={sede.maps} target="_blank" rel="noopener noreferrer">CÓMO LLEGAR <span aria-hidden="true">↗</span></a>
+          <div className="sedes__location-actions">
+            <a className="sedes__button" href={sede.maps} target="_blank" rel="noopener noreferrer">CÓMO LLEGAR <span aria-hidden="true">↗</span></a>
+            <a className="sedes__button" href="/programas">CONOCE LAS ACTIVIDADES DEL GIMNASIO <span aria-hidden="true">→</span></a>
+          </div>
         </section>
 
         <section className="sedes__closing" aria-labelledby="sedes-contact-title">

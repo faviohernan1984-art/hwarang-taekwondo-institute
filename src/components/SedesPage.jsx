@@ -56,45 +56,49 @@ export default function SedesPage() {
 
   return (
     <main className="sedes" id="sedes-contenido">
-      <header className="sedes__opening">
-        <div className="sedes__opening-content">
-          <div>
-            <p className="sedes__eyebrow">SEDE RAFAELA</p>
-            <h1>Tu camino<br />Nuestro lugar</h1>
+      <div className="sedes__experience">
+        <header className="sedes__opening">
+          <div className="sedes__opening-content">
+            <div>
+              <p className="sedes__eyebrow">SEDE RAFAELA</p>
+              <h1>Tu camino<br />Nuestro lugar</h1>
+            </div>
+            <div className="sedes__introduction">
+              <p className="sedes__venue">{sede.name}</p>
+              <p className="sedes__address">{sede.address}</p>
+              <p>Hwarang Taekwon-Do Institute desarrolla sus actividades presenciales en Gimnasio La Máquina, Rafaela.</p>
+              <p>Dos propuestas para formarte, entrenar y crecer</p>
+            </div>
           </div>
-          <div className="sedes__introduction">
-            <p className="sedes__venue">{sede.name}</p>
-            <p className="sedes__address">{sede.address}</p>
-            <p>Hwarang Taekwon-Do Institute desarrolla sus actividades presenciales en Gimnasio La Máquina, Rafaela.</p>
-            <p>Dos propuestas para formarte, entrenar y crecer</p>
-          </div>
+        </header>
+        <div className="sedes__inner">
+          <section className="sedes__activities" aria-label="Actividades y horarios">
+            {activities.map((activity) => (
+              <article className="sedes__activity" key={activity.id} aria-labelledby={`sedes-${activity.id}`}>
+                <p className="sedes__eyebrow">{activity.label}</p>
+                <h2 id={`sedes-${activity.id}`}>{activity.title}</h2>
+                <p className="sedes__description">{activity.description}</p>
+                {activity.note && <p className="sedes__note">{activity.note}</p>}
+                <div className="sedes__schedule">
+                  <h3>Días y horarios</h3>
+                  <dl>
+                    {activity.schedule.map(([day, start, end]) => (
+                      <div className="sedes__time" key={day}>
+                        <dt>{day}</dt>
+                        <dd><time dateTime={start}>{start}</time> a <time dateTime={end}>{end}</time></dd>
+                      </div>
+                    ))}
+                  </dl>
+                </div>
+                <a className="sedes__consult" href={consultation(activity.query)} target="_blank" rel="noopener noreferrer">
+                  Consultá por {activity.title}<span aria-hidden="true">↗</span>
+                </a>
+              </article>
+            ))}
+          </section>
         </div>
-      </header>
+      </div>
       <div className="sedes__inner">
-        <section className="sedes__activities" aria-label="Actividades y horarios">
-          {activities.map((activity) => (
-            <article className="sedes__activity" key={activity.id} aria-labelledby={`sedes-${activity.id}`}>
-              <p className="sedes__eyebrow">{activity.label}</p>
-              <h2 id={`sedes-${activity.id}`}>{activity.title}</h2>
-              <p className="sedes__description">{activity.description}</p>
-              {activity.note && <p className="sedes__note">{activity.note}</p>}
-              <div className="sedes__schedule">
-                <h3>Días y horarios</h3>
-                <dl>
-                  {activity.schedule.map(([day, start, end]) => (
-                    <div className="sedes__time" key={day}>
-                      <dt>{day}</dt>
-                      <dd><time dateTime={start}>{start}</time> a <time dateTime={end}>{end}</time></dd>
-                    </div>
-                  ))}
-                </dl>
-              </div>
-              <a className="sedes__consult" href={consultation(activity.query)} target="_blank" rel="noopener noreferrer">
-                Consultá por {activity.title}<span aria-hidden="true">↗</span>
-              </a>
-            </article>
-          ))}
-        </section>
 
         <section className="sedes__location" aria-labelledby="sedes-location-title">
           <div>

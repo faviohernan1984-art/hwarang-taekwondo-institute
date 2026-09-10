@@ -29,7 +29,7 @@
 }
 .sedes__opening::before {
   z-index: -2;
-  background: url('/images/sede-la-maquina-exterior.webp') 55% center / cover no-repeat;
+  background: url('/images/sede-la-maquina-exterior-horizontal.webp') center / cover no-repeat;
 }
 .sedes__opening::after {
   z-index: -1;
@@ -83,30 +83,41 @@
     padding-bottom: clamp(6.25rem, 8vw, 8rem);
     overflow: clip;
   }
-  .sedes__opening::before, .sedes__opening::after { height: clamp(40rem, 55vw, 56rem); }
-  .sedes__opening::before { background-position: center 55%; }
-  .sedes__opening::after { background: linear-gradient(to bottom, rgba(5,5,5,.72) 0%, rgba(5,5,5,.2) 20%, rgba(5,5,5,.3) 45%, rgba(5,5,5,.88) 70%, #050505 100%); }
-  /* Finish the shortened opening without resizing the approved photo layers. */
-  .sedes__opening-content::after {
+  /* A single image spans the opening and activities; the treatment samples it
+     directly, so the blurred area cannot drift from the sharp facade. */
+  .sedes__experience {
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+    background: var(--hti-black);
+  }
+  .sedes__experience::before,
+  .sedes__experience::after {
     content: '';
     position: absolute;
-    z-index: -1;
-    inset: auto 0 0;
-    height: clamp(6.25rem, 8vw, 8rem);
-    background: linear-gradient(to bottom, rgba(5,5,5,0) 0%, #050505 90%);
+    inset: 0;
     pointer-events: none;
   }
-  .sedes__opening-content > div { position: relative; isolation: isolate; }
-  .sedes__opening-content > div::before {
-    content: '';
-    position: absolute;
-    z-index: -1;
-    inset: -2rem -3rem;
-    background: radial-gradient(ellipse at center, rgba(163,13,24,.07) 0%, rgba(163,13,24,.025) 45%, rgba(163,13,24,0) 72%);
-    pointer-events: none;
+  .sedes__experience::before {
+    z-index: -2;
+    background: url('/images/sede-la-maquina-exterior-horizontal.webp') center / cover no-repeat;
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 82%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 82%, transparent 100%);
   }
-  .sedes__opening h1, .sedes__opening .sedes__venue {
-    text-shadow: 0 2px 14px rgba(0,0,0,.65), 0 0 28px rgba(0,0,0,.4);
+  .sedes__experience::after {
+    z-index: -1;
+    -webkit-backdrop-filter: blur(3px);
+    backdrop-filter: blur(3px);
+    background: linear-gradient(to bottom, rgba(5,5,5,.72) 0%, rgba(5,5,5,.72) 46%, rgba(5,5,5,.86) 75%, #050505 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 24%, #000 46%, #000 100%);
+    mask-image: linear-gradient(to bottom, transparent 24%, #000 46%, #000 100%);
+  }
+  .sedes__opening::before, .sedes__opening::after { content: none; }
+  .sedes__opening,
+  .sedes__opening :is(h1, p, .sedes__introduction),
+  .site:has(> .sedes) > .site-header :is(.brand, .brand span, .brand small, .nav a) {
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0,0,0,.95), 0 0 14px rgba(0,0,0,.8);
   }
   .sedes__activity { padding-block: 2rem; }
   .sedes__location { padding-block: 1.75rem; }
@@ -116,14 +127,14 @@
   .sedes__opening::before, .sedes__opening::after { height: 30rem; }
   .sedes__opening { padding-top: 18rem; padding-bottom: 2rem; }
   .sedes__opening-content { gap: 1.5rem; }
-  .sedes__opening::before { background-position: 55% 55%; }
+  .sedes__opening::before { background-position: center; }
   .sedes__opening::after { background: linear-gradient(to bottom, rgba(5,5,5,.72), rgba(5,5,5,.25) 22%, rgba(5,5,5,.86) 57%, #050505 100%); }
   .sedes h1 { font-size: 3rem; }
   .sedes__activity, .sedes__location { padding-block: 1.75rem; }
   .sedes__closing { padding-top: 2rem; }
 }
 @media (max-width: 700px) and (orientation: portrait) {
-  .sedes__opening::before { background-position: 49% center; }
+  .sedes__opening::before { background-image: url('/images/sede-la-maquina-exterior.webp'); background-position: 49% center; }
 }
 @media (prefers-reduced-motion: reduce) {
   .sedes__button { transition: none; }

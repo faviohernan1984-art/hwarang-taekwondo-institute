@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import '../styles/evolution.css'
 
 const scenes = [
@@ -65,6 +66,27 @@ function Scene({ index, variant, media = false, children }) {
 }
 
 export default function EvolutionPage() {
+  useEffect(() => {
+    const previousTitle = document.title
+    const existingDescription = document.querySelector('meta[name="description"]')
+    const description = existingDescription || document.createElement('meta')
+    const previousDescription = description.getAttribute('content')
+    if (!existingDescription) {
+      description.name = 'description'
+      document.head.appendChild(description)
+    }
+    document.title = 'Evoluci\u00f3n institucional | Hwarang Taekwon-Do Institute'
+    description.setAttribute('content', 'Conoc\u00e9 la evoluci\u00f3n de Hwarang Taekwon-Do Institute: origen, formaci\u00f3n, identidad e innovaci\u00f3n, con la misma esencia y un prop\u00f3sito m\u00e1s grande.')
+    return () => {
+      document.title = previousTitle
+      if (!existingDescription) description.remove()
+      else if (previousDescription === null) description.removeAttribute('content')
+      else description.setAttribute('content', previousDescription)
+    }
+  }, [])
+
+
+
   return (
     <main className="evolution">
       <div className="evolution__mobile-background" aria-hidden="true">

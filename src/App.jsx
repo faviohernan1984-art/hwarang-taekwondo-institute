@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import Header from './components/Header.jsx'
 import Hero from './components/Hero.jsx'
 import Contact from './components/Contact.jsx'
@@ -9,6 +10,24 @@ const constructionPaths = new Set(['/institute', '/programas', '/historia', '/ga
 
 export default function App() {
   const path = window.location.pathname.replace(/\/+$/, '') || '/'
+
+  useEffect(() => {
+    if (!['/', '/sedes', '/evolucion'].includes(path)) return
+    const existingCanonical = document.querySelector('link[rel="canonical"]')
+    const canonical = existingCanonical || document.createElement('link')
+    const previousHref = canonical.getAttribute('href')
+    if (!existingCanonical) {
+      canonical.rel = 'canonical'
+      document.head.appendChild(canonical)
+    }
+    canonical.setAttribute('href', 'https://www.hwarangtaekwondo.com.ar' + path)
+    return () => {
+      if (!existingCanonical) canonical.remove()
+      else if (previousHref === null) canonical.removeAttribute('href')
+      else canonical.setAttribute('href', previousHref)
+    }
+  }, [path])
+
 
   return (
     <div className="site">

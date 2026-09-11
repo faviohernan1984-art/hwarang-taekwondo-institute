@@ -1,15 +1,279 @@
-.contact { min-height: 82svh; display: grid; place-items: center; padding: 8rem 7vw; background: linear-gradient(180deg, rgba(5,5,5,.9) 0%, rgba(5,5,5,.925) 48%, rgba(5,5,5,.95) 100%); text-align: center; }
-.contact__inner { width: min(820px, 100%); transform: translateY(-4svh); }
-.contact h2 { margin: 0; font: 400 clamp(3.2rem, 7vw, 7rem)/.95 'Marcellus', Georgia, serif; letter-spacing: -.025em; text-transform: uppercase; }
-.contact__copy { max-width: 610px; margin: 2rem auto 0; color: var(--hti-light-gray); font: 300 clamp(.95rem, 1.3vw, 1.1rem)/1.8 'Montserrat', sans-serif; }
-.whatsapp-link { display: inline-flex; align-items: center; justify-content: center; gap: 1rem; min-height: 50px; margin-top: 2.7rem; border: .75px solid rgba(163,13,24,.72); padding: .9rem 1.75rem; background: transparent; color: var(--hti-white); font-size: .67rem; letter-spacing: .24em; text-decoration: none; text-transform: uppercase; transition: border-color .2s ease, color .2s ease, background-color .2s ease; }
-.whatsapp-link svg { width: 1.15rem; height: 1.15rem; flex: none; }
-.whatsapp-link:hover, .whatsapp-link:focus-visible { border-color: var(--hti-red-active); background: rgba(13,13,13,.35); color: var(--hti-red-active); }
-.contact__number { margin: 1rem 0 0; color: var(--hti-gray); font-size: .65rem; letter-spacing: .16em; }
-@media (max-width: 700px) {
-  .contact { min-height: 78svh; padding: 7rem 1.5rem; }
-  .contact__inner { transform: translateY(-2svh); }
-  .contact h2 { font-size: clamp(3rem, 15vw, 4.8rem); }
-  .whatsapp-link { width: min(100%, 18rem); min-height: 54px; }
+.contact {
+  display: grid;
+  place-items: center;
+  padding: clamp(6rem, 10vw, 10rem) 7vw clamp(4rem, 7vw, 7rem);
+  background: linear-gradient(180deg, rgba(5,5,5,.9), rgba(5,5,5,.96) 65%, #050505);
+  text-align: center;
 }
-@media (prefers-reduced-motion: reduce) { .whatsapp-link { transition: none; } }
+.contact__inner { width: min(820px, 100%); min-width: 0; }
+.contact h2 { margin: 0; font: 400 clamp(3.2rem, 7vw, 7rem)/.95 'Marcellus', Georgia, serif; letter-spacing: -.025em; text-transform: uppercase; }
+.contact__copy { max-width: 490px; margin: 2rem auto 0; color: var(--hti-light-gray); font: 300 clamp(.95rem, 1.3vw, 1.1rem)/1.8 'Montserrat', sans-serif; text-wrap: pretty; }
+.contact .whatsapp-link { display: inline-flex; align-items: center; justify-content: center; gap: .85rem; min-height: 54px; max-width: 100%; margin-top: 2.5rem; border: 1px solid rgba(163,13,24,.8); padding: 1rem 2.4rem; background: rgba(163,13,24,.13); color: var(--hti-white); font-size: .7rem; letter-spacing: .24em; text-decoration: none; text-transform: uppercase; transition: border-color .2s ease, background-color .2s ease; }
+.contact .whatsapp-link svg { width: 1.15rem; height: 1.15rem; flex: none; }
+.contact .whatsapp-link:hover { border-color: var(--hti-red-active); background: rgba(163,13,24,.25); }
+.contact__socials { display: flex; flex-wrap: wrap; justify-content: center; gap: .75rem 1.8rem; margin: 3.5rem 0 0; padding: 0; list-style: none; }
+.contact__social { display: inline-flex; align-items: center; justify-content: center; gap: .6rem; min-height: 44px; padding: .5rem .25rem; color: var(--hti-light-gray); font-size: .68rem; letter-spacing: .04em; text-decoration: none; transition: color .2s ease; }
+.contact__social svg { width: 1.1rem; height: 1.1rem; flex: none; }
+.contact a.contact__social:hover { color: var(--hti-white); }
+.contact__actions { display: contents; }
+.contact__action-name small { display: block; margin-top: .3rem; color: var(--hti-light-gray); font-size: .6rem; letter-spacing: .1em; text-transform: uppercase; }
+.contact__explore { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem 2.8rem; width: fit-content; max-width: 100%; margin: 2.5rem auto 0; border-top: 1px solid rgba(242,240,235,.1); padding-top: 2rem; }
+.contact__explore a { display: inline-flex; align-items: center; justify-content: center; gap: .75rem; min-height: 44px; padding: .5rem .25rem; color: var(--hti-light-gray); font-size: .65rem; letter-spacing: .15em; text-transform: uppercase; text-decoration: none; transition: color .2s ease; }
+.contact__explore a span { color: var(--hti-red); font-size: .95rem; }
+.contact__explore a:hover { color: var(--hti-white); }
+.contact a:focus-visible { outline: 2px solid var(--hti-red-active); outline-offset: 5px; }
+@media (max-width: 700px) {
+  .contact { padding: 6rem 1.5rem 4rem; }
+  .contact h2 { font-size: clamp(2.6rem, 13vw, 4.8rem); }
+  .contact .whatsapp-link { width: min(100%, 18rem); }
+  .contact__socials { gap: .5rem 1.25rem; margin-top: 2.75rem; }
+  .contact__explore { column-gap: 1.5rem; margin-top: 2rem; padding-top: 1.5rem; }
+}
+@media (max-width: 380px) {
+  .contact__socials { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .contact .whatsapp-link, .contact__social, .contact__explore a { transition: none; }
+}
+
+/* Elementos exclusivos de desktop: ocultos en la composición mobile aprobada. */
+.contact__scenes { display: none; }
+.contact__explore .contact__route-detail { display: none; }
+
+
+/* Tres franjas: encabezado, escena/acciones y caminos institucionales. */
+@media (min-width: 941px) {
+  .contact {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: clamp(2rem, 4vw, 5rem);
+    place-items: stretch;
+    min-height: 100svh;
+    box-sizing: border-box;
+    grid-template-rows: auto auto auto minmax(min-content, 1fr) auto;
+    align-content: stretch;
+    padding: clamp(2rem, 5svh, 4rem) max(7vw, calc((100% - 1480px) / 2));
+    text-align: left;
+    background: radial-gradient(ellipse 45% 38% at 58% 52%, rgba(112,16,30,.2), transparent 78%), #070607;
+  }
+  .contact__inner { display: contents; }
+  .contact__inner > .eyebrow { grid-area: 1 / 1 / 2 / -1; margin-bottom: 1rem; text-align: center; }
+  .contact .contact__inner h2 {
+    grid-area: 2 / 1 / 3 / -1;
+    text-align: center;
+    font-size: clamp(2.3375rem, 4.505vw, 5.1rem);
+    line-height: 1.05;
+    white-space: nowrap;
+  }
+  .contact__copy { grid-area: 3 / 1 / 4 / -1; max-width: 620px; margin: 1.25rem auto 0; text-align: center; }
+
+  /* Las escenas superpuestas comparten celda y reservan su altura, incluso inactivas. */
+  .contact__scenes {
+    grid-area: 4 / 1 / 5 / 2;
+    align-self: center;
+    display: grid;
+    align-items: stretch;
+    position: relative;
+    min-width: 0;
+    margin-block: clamp(1rem, 2svh, 1.5rem);
+    border-top: 2px solid transparent;
+    border-bottom: 1px solid transparent;
+    pointer-events: none;
+  }
+  /* Bordes transparentes conservan la geometría; solo queda un acento breve. */
+  .contact__scenes::before { content: ''; position: absolute; top: -2px; left: 10%; width: 30%; height: 1px; background: var(--hti-red-active); pointer-events: none; }
+  .contact__scene {
+    grid-area: 1 / 1;
+    min-width: 0;
+    display: grid;
+    grid-template-rows: auto auto;
+    align-content: center;
+    justify-self: center;
+    width: 80%;
+    gap: 1.5rem;
+    padding: 1.25rem 0;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity .5s ease, transform .5s ease;
+    background: radial-gradient(ellipse at var(--scene-x, 50%) 50%, rgba(130,16,33,.16), transparent 72%);
+  }
+  .contact__scene-word {
+    display: block;
+    font: 400 clamp(1.52rem, 2.92vw, 3.2rem)/1.15 'Marcellus', Georgia, serif;
+    letter-spacing: -.025em;
+    white-space: nowrap;
+    color: rgba(242,240,235,.1);
+    -webkit-text-stroke: 1px rgba(242,240,235,.45);
+  }
+  .contact__scene-caption { display: grid; align-content: start; gap: 1.25rem; color: #cbc7c5; font-size: .76rem; letter-spacing: .1em; line-height: 1.9; }
+  .contact__scene-index { color: var(--hti-white); font: 400 clamp(1.32rem, 2.2vw, 2.2rem)/1.2 'Marcellus', Georgia, serif; }
+
+  .contact__scene[data-scene='rest'] { opacity: 1; transform: none; }
+
+  .contact .whatsapp-link {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--hti-red-active);
+    border-left-width: 4px;
+    background: linear-gradient(110deg, rgba(130,16,33,.45), rgba(80,10,23,.18));
+    box-shadow: 0 10px 38px rgba(112,16,30,.13);
+    font-size: 1rem; font-weight: 500;
+    transition: background-color .25s ease, box-shadow .35s ease, border-color .25s ease;
+  }
+  .contact .whatsapp-link svg { width: 1.65rem; height: 1.65rem; transition: transform .25s ease; }
+  .contact .whatsapp-link::before { content: ''; position: absolute; inset: 0; background: linear-gradient(110deg, transparent 25%, rgba(242,240,235,.1), transparent 75%); transform: translateX(-110%); transition: transform .65s ease; pointer-events: none; }
+  .contact .whatsapp-link:is(:hover, :focus-visible) { background-color: rgba(130,16,33,.3); box-shadow: 0 10px 38px rgba(112,16,30,.25); }
+  .contact .whatsapp-link:is(:hover, :focus-visible)::before { transform: translateX(110%); }
+  .contact .whatsapp-link:is(:hover, :focus-visible) svg { transform: translateY(-1px); }
+  .contact__socials li { min-width: 0; }
+  .contact .contact__social {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    min-height: 62px;
+    height: 100%;
+    padding: .75rem .5rem;
+    gap: .7rem;
+    border-top: 1px solid transparent;
+    color: var(--hti-white);
+    opacity: .92;
+    font-size: clamp(.86rem, 1.1vw, 1.045rem);
+    transition: color .22s ease, opacity .22s ease, background-color .22s ease;
+  }
+  .contact__social svg { width: 1.5rem; height: 1.5rem; }
+  .contact__social::after, .contact__explore a::after { content: ''; position: absolute; bottom: .4rem; left: calc(50% - 12px); width: 24px; height: 1px; background: var(--hti-red-active); transform: scaleX(0); transform-origin: left; transition: transform .25s ease; }
+  .contact .contact__social:is(:hover, :focus-visible) { opacity: 1; background: rgba(163,13,24,.12); }
+  .contact__social:is(:hover, :focus-visible)::after, .contact__explore a:is(:hover, :focus-visible)::after { transform: scaleX(1); }
+  .contact__actions:has(:focus-visible) [data-contact-option]:not(:focus-visible) { opacity: .65; }
+
+  .contact__explore { grid-area: 5 / 1 / 6 / -1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: stretch; width: 100%; gap: clamp(1.25rem, 3vw, 2.5rem); margin: 0; padding: 0; border: 0; }
+  .contact__explore a {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.5rem minmax(0, max-content) 1.5rem;
+    justify-content: start;
+    grid-template-rows: 1.8rem minmax(2.2rem, auto);
+    align-items: start;
+    align-content: start;
+    gap: 1rem .6rem;
+    padding: .5rem 0;
+    border-top: 1px solid transparent;
+    font-size: clamp(1.08rem, 1.728vw, 1.62rem);
+    letter-spacing: .04em;
+    color: var(--hti-white);
+    transition: color .22s ease;
+  }
+  .contact__explore a::after { left: 2.1rem; bottom: .5rem; }
+  .contact__explore .contact__route-detail { display: block; }
+  .contact__explore .contact__route-index { font-size: .76rem; line-height: 1.8; color: var(--hti-red-active); }
+  .contact__explore .contact__route-copy { grid-column: 2 / 4; font-size: .68rem; line-height: 1.8; letter-spacing: .08em; color: #cbc7c5; }
+  .contact__explore a > span[aria-hidden='true']:not(.contact__route-index) { transition: transform .25s ease; }
+  .contact__explore a:is(:hover, :focus-visible) { color: var(--hti-red-active); }
+  .contact__explore a:is(:hover, :focus-visible) > span[aria-hidden='true']:not(.contact__route-index) { transform: translateX(2px); }
+
+  /* Seis accesos de iguales dimensiones; WhatsApp se distingue por su tratamiento visual. */
+  .contact__actions {
+    grid-area: 4 / 2 / 5 / 3;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(120px, 1fr));
+    align-content: center;
+    align-self: center;
+    gap: clamp(.5rem, 1.2vw, 1rem);
+    width: 100%;
+    min-width: 0;
+    margin-block: clamp(1rem, 2svh, 1.5rem);
+  }
+  .contact__actions .contact__socials,
+  .contact__actions .contact__socials li { display: contents; }
+  .contact .contact__actions .whatsapp-link,
+  .contact .contact__actions .contact__social {
+    grid-area: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+    justify-self: stretch;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    min-height: 120px;
+    height: 100%;
+    margin: 0;
+    padding: 1rem .4rem;
+    gap: .75rem;
+    border: 1px solid transparent;
+    font-size: clamp(.7rem, .95vw, .9rem);
+    letter-spacing: .025em;
+    text-align: center;
+    transition: opacity .22s ease, background-color .25s ease, box-shadow .35s ease;
+  }
+  .contact .contact__actions .whatsapp-link { border-color: var(--hti-red-active); }
+  .contact .contact__actions svg { width: 1.5rem; height: 1.5rem; }
+  .contact__scene[data-scene^='facebook-'] .contact__scene-word { white-space: normal; font-size: clamp(1.4rem, 2.35vw, 2.6rem); text-wrap: balance; }
+  .contact__scene[data-scene='rest'] .contact__scene-word { font-size: clamp(1.7rem, 3.2vw, 3.5rem); }
+  .contact__explore a:nth-child(2) { justify-content: center; text-align: center; }
+  .contact__explore a:nth-child(3) { justify-content: end; text-align: right; }
+  .contact__explore a:nth-child(1) .contact__route-copy { grid-column: 2 / 4; text-align: left; }
+  .contact__explore a:nth-child(2) .contact__route-copy { grid-column: 1 / -1; text-align: center; }
+  .contact__explore a:nth-child(3) .contact__route-copy { grid-column: 1 / 3; text-align: right; }
+  .contact__explore a:nth-child(2)::after { left: calc(50% - 12px); }
+  .contact__explore a:nth-child(3)::after { left: auto; right: 2.1rem; }
+  /* El hover tiene prioridad; sin hover, el foco de teclado selecciona una sola escena. */
+  .contact:has([data-contact-option]:is(:hover, :focus-visible)) .contact__scene[data-scene='rest'] { opacity: 0; transform: translateY(4px); }
+  .contact__scene[data-scene='instagram'] { --scene-x: 35%; }
+  .contact:has([data-contact-option='instagram']:hover) .contact__scene[data-scene='instagram'],
+  .contact:not(:has([data-contact-option]:hover)):has([data-contact-option='instagram']:focus-visible) .contact__scene[data-scene='instagram'] { opacity: 1; transform: none; }
+  .contact__scene[data-scene='facebook-profile'] { --scene-x: 42%; }
+  .contact:has([data-contact-option='facebook-profile']:hover) .contact__scene[data-scene='facebook-profile'],
+  .contact:not(:has([data-contact-option]:hover)):has([data-contact-option='facebook-profile']:focus-visible) .contact__scene[data-scene='facebook-profile'] { opacity: 1; transform: none; }
+  .contact__scene[data-scene='facebook-page'] { --scene-x: 48%; }
+  .contact:has([data-contact-option='facebook-page']:hover) .contact__scene[data-scene='facebook-page'],
+  .contact:not(:has([data-contact-option]:hover)):has([data-contact-option='facebook-page']:focus-visible) .contact__scene[data-scene='facebook-page'] { opacity: 1; transform: none; }
+  .contact__scene[data-scene='youtube'] { --scene-x: 65%; }
+  .contact:has([data-contact-option='youtube']:hover) .contact__scene[data-scene='youtube'],
+  .contact:not(:has([data-contact-option]:hover)):has([data-contact-option='youtube']:focus-visible) .contact__scene[data-scene='youtube'] { opacity: 1; transform: none; }
+  .contact__scene[data-scene='tiktok'] { --scene-x: 58%; }
+  .contact:has([data-contact-option='tiktok']:hover) .contact__scene[data-scene='tiktok'],
+  .contact:not(:has([data-contact-option]:hover)):has([data-contact-option='tiktok']:focus-visible) .contact__scene[data-scene='tiktok'] { opacity: 1; transform: none; }
+  .contact__scene[data-scene='whatsapp'] { --scene-x: 50%; }
+  .contact:has([data-contact-option='whatsapp']:hover) .contact__scene[data-scene='whatsapp'],
+  .contact:not(:has([data-contact-option]:hover)):has([data-contact-option='whatsapp']:focus-visible) .contact__scene[data-scene='whatsapp'] { opacity: 1; transform: none; }
+  .contact__scene[data-scene='sedes'] { --scene-x: 38%; }
+  .contact:has([data-contact-option='sedes']:hover) .contact__scene[data-scene='sedes'],
+  .contact:not(:has([data-contact-option]:hover)):has([data-contact-option='sedes']:focus-visible) .contact__scene[data-scene='sedes'] { opacity: 1; transform: none; }
+  .contact__scene[data-scene='evolucion'] { --scene-x: 50%; }
+  .contact:has([data-contact-option='evolucion']:hover) .contact__scene[data-scene='evolucion'],
+  .contact:not(:has([data-contact-option]:hover)):has([data-contact-option='evolucion']:focus-visible) .contact__scene[data-scene='evolucion'] { opacity: 1; transform: none; }
+  .contact__scene[data-scene='programas'] { --scene-x: 62%; }
+  .contact:has([data-contact-option='programas']:hover) .contact__scene[data-scene='programas'],
+  .contact:not(:has([data-contact-option]:hover)):has([data-contact-option='programas']:focus-visible) .contact__scene[data-scene='programas'] { opacity: 1; transform: none; }
+}
+@media (min-width: 941px) and (hover: hover) and (pointer: fine) {
+  .contact__actions:has([data-contact-option]:hover) [data-contact-option]:not(:hover) { opacity: .65; }
+}
+@media (min-width: 941px) and (prefers-reduced-motion: reduce) {
+  .contact .contact__scene,
+  .contact .whatsapp-link,
+  .contact .whatsapp-link svg,
+  .contact .contact__social,
+  .contact .contact__social::after,
+  .contact .contact__explore a,
+  .contact .contact__explore a::after,
+  .contact .contact__explore a > span[aria-hidden='true']:not(.contact__route-index) { transition: none; }
+  .contact .contact__scene,
+  .contact .whatsapp-link:is(:hover, :focus-visible) svg,
+  .contact .contact__explore a:is(:hover, :focus-visible) > span[aria-hidden='true']:not(.contact__route-index) { transform: none; }
+  .contact .whatsapp-link::before { display: none; }
+}
+
+@media (max-width: 700px) {
+  .contact__socials { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem 1rem; }
+  .contact__socials li:last-child { grid-column: 1 / -1; }
+  .contact__social { min-height: 52px; }
+}
+@media (min-width: 941px) and (prefers-reduced-motion: reduce) {
+  .contact .contact__actions .whatsapp-link,
+  .contact .contact__actions .contact__social { transition: none; }
+}

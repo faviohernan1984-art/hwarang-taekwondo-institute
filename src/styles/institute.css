@@ -1,0 +1,58 @@
+.hti-institute {
+  color: var(--hti-white);
+  background: var(--hti-black);
+  line-height: 1.75;
+}
+
+.hti-institute__section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3rem;
+  min-height: 100svh;
+  padding: 5rem max(1.25rem, calc((100vw - 1120px) / 2));
+  border-bottom: 1px solid var(--hti-dark-gray);
+}
+
+.hti-institute__section:first-child { padding-top: 9rem; }
+.hti-institute__content { margin-block: auto; }
+.hti-institute h1, .hti-institute h2 {
+  max-width: 24ch;
+  margin: 0 0 1.75rem;
+  font-family: 'Marcellus', Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(2rem, 4.2vw, 4rem);
+  line-height: 1.15;
+  overflow-wrap: break-word;
+}
+.hti-institute h1 { font-size: clamp(2.4rem, 5.5vw, 5rem); }
+.hti-institute p { max-width: 68ch; margin: 0 0 1.25rem; }
+.hti-institute__eyebrow { color: var(--hti-light-gray); font-size: .85rem; }
+.hti-institute__statement { font-size: clamp(1.1rem, 2vw, 1.5rem); font-weight: 500; }
+.hti-institute__pillars { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+.hti-institute h3 { margin: 0 0 .75rem; padding-top: 1rem; border-top: 2px solid var(--hti-red); font-size: 1rem; font-weight: 500; }
+.hti-institute__method { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem 3rem; padding-left: 1.75rem; }
+.hti-institute__method li { padding: .5rem; }
+.hti-institute__method li::marker { color: var(--hti-light-gray); }
+.hti-institute__navigation { display: flex; justify-content: space-between; gap: .75rem; }
+.hti-institute__navigation button {
+  min-height: 44px;
+  padding: .65rem .75rem;
+  border: 1px solid var(--hti-gray);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: .85rem;
+  cursor: pointer;
+}
+.hti-institute__navigation button:disabled { opacity: .35; cursor: default; }
+.hti-institute__cta { display: inline-flex; align-items: center; min-height: 48px; margin-top: 1rem; padding: .75rem 1.25rem; border: 1px solid var(--hti-red-active); text-decoration: none; }
+.hti-institute__navigation button:enabled:hover, .hti-institute__cta:hover { background: var(--hti-dark-gray); }
+.hti-institute :focus-visible { outline: 2px solid var(--hti-white); outline-offset: 4px; }
+.hti-institute__section:focus-visible { outline-offset: -4px; }
+
+@media (max-width: 700px) {
+  .hti-institute__section { padding-block: 3.5rem 2rem; gap: 2rem; }
+  .hti-institute__pillars, .hti-institute__method { grid-template-columns: 1fr; }
+  .hti-institute__navigation button { font-size: .75rem; padding-inline: .5rem; }
+}

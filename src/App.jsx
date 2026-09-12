@@ -5,14 +5,15 @@ import Contact from './components/Contact.jsx'
 import ConstructionPage from './components/ConstructionPage.jsx'
 import EvolutionPage from './components/EvolutionPage.jsx'
 import SedesPage from './components/SedesPage.jsx'
+import InstitutePage from './components/InstitutePage.jsx'
 
-const constructionPaths = new Set(['/institute', '/programas', '/historia', '/galeria'])
+const constructionPaths = new Set(['/programas', '/historia', '/galeria'])
 
 export default function App() {
   const path = window.location.pathname.replace(/\/+$/, '') || '/'
 
   useEffect(() => {
-    if (!['/', '/sedes', '/evolucion'].includes(path)) return
+    if (!['/', '/sedes', '/evolucion', '/institute'].includes(path)) return
     const existingCanonical = document.querySelector('link[rel="canonical"]')
     const canonical = existingCanonical || document.createElement('link')
     const previousHref = canonical.getAttribute('href')
@@ -32,7 +33,7 @@ export default function App() {
   return (
     <div className="site">
       <Header />
-      {path === '/sedes' ? <SedesPage /> : path === '/evolucion' ? <EvolutionPage /> : constructionPaths.has(path) ? <ConstructionPage /> : <main>
+      {path === '/institute' ? <InstitutePage /> : path === '/sedes' ? <SedesPage /> : path === '/evolucion' ? <EvolutionPage /> : constructionPaths.has(path) ? <ConstructionPage /> : <main>
         <div className="home-photo">
           <img src="/images/hti-hero-original.jpg" alt="Alumnos de Hwarang practicando Taekwon-Do en el dojang" width="6000" height="4000" fetchPriority="high" />
         </div>

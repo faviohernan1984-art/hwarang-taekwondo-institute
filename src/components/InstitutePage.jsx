@@ -67,6 +67,9 @@ export default function InstitutePage() {
         <h1 id="hti-apertura-title">HWARANG TAEKWON-DO INSTITUTE</h1>
         <p className="hti-institute__statement">MÁS QUE TAEKWON-DO</p>
         <p>En Hwarang Taekwon-Do Institute, la formación marcial, humana, deportiva y la innovación conviven bajo una misma visión: acompañar a cada persona en la construcción de su propio camino, junto a otros.</p>
+        <div className="hti-institute__opening-image" aria-hidden="true">
+          <img src="/images/institute/institute-01-mas-que-taekwondo.jpg" alt="" />
+        </div>
       </InstituteSection>
 
       <InstituteSection index={1}>

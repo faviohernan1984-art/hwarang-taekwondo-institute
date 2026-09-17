@@ -1,23 +1,6 @@
-const siteUrl = 'https://www.hwarangtaekwondo.com.ar'
-
-const seoByRoute = {
-  '/': {
-    title: 'Hwarang Taekwon-Do Institute',
-    description: 'Hwarang Taekwon-Do Institute — Formación que trasciende.',
-  },
-  '/sedes': {
-    title: 'Sede Rafaela | Taekwon-Do y Fuerza | HTI',
-    description: 'Conocé la sede de Hwarang Taekwon-Do Institute en Gimnasio La Máquina, Rafaela. Taekwon-Do y espacio FUERZA con atención de Favio Hernán.',
-  },
-  '/evolucion': {
-    title: 'Evolución institucional | Hwarang Taekwon-Do Institute',
-    description: 'Conocé la evolución de Hwarang Taekwon-Do Institute: origen, formación, identidad e innovación, con la misma esencia y un propósito más grande.',
-  },
-  '/institute': {
-    title: 'Institute | Hwarang Taekwon-Do Institute',
-    description: 'Hwarang Taekwon-Do Institute: formación marcial, humana y deportiva, e innovación para acompañar a cada persona en la construcción de su propio camino.',
-  },
-}
+import { mkdir, readFile, writeFile } from 'node:fs/promises'
+import { dirname, resolve } from 'node:path'
+import { SEO_BY_ROUTE, SITE_URL } from './src/seo.js'
 
 function escapeAttribute(value) {
   return value.replaceAll('&', '&amp;').replaceAll('"', '&quot;')
@@ -25,32 +8,41 @@ function escapeAttribute(value) {
 
 function withRouteSeo(html, route, seo) {
   const descriptionPattern = /<meta name="description" content="[^"]*" \/>/
+  const canonicalPattern = /<link rel="canonical" href="[^"]*" \/>/
   const titlePattern = /<title>[^<]*<\/title>/
 
   if (!descriptionPattern.test(html) || !titlePattern.test(html)) {
     throw new Error('SEO prerender could not find the base description or title')
   }
 
-  return html
+  const routeHtml = html
     .replace(descriptionPattern, `<meta name="description" content="${escapeAttribute(seo.description)}" />`)
-    .replace(titlePattern, `<link rel="canonical" href="${siteUrl}${route}" />\n    <title>${seo.title}</title>`)
+    .replace(titlePattern, `<title>${seo.title}</title>`)
+
+  const canonical = `<link rel="canonical" href="${SITE_URL}${route}" />`
+  return canonicalPattern.test(routeHtml)
+    ? routeHtml.replace(canonicalPattern, canonical)
+    : routeHtml.replace(`<title>${seo.title}</title>`, `${canonical}\n    <title>${seo.title}</title>`)
 }
 
 function routeSeoHtml() {
   return {
     name: 'route-seo-html',
+    transformIndexHtml(html) {
+      return withRouteSeo(html, '/', SEO_BY_ROUTE['/'])
+    },
     apply: 'build',
     async closeBundle() {
       const outputDirectory = resolve('dist')
       const indexPath = resolve(outputDirectory, 'index.html')
       const baseHtml = await readFile(indexPath, 'utf8')
 
-      await writeFile(indexPath, withRouteSeo(baseHtml, '/', seoByRoute['/']))
+      await writeFile(indexPath, withRouteSeo(baseHtml, '/', SEO_BY_ROUTE['/']))
 
       for (const route of ['/sedes', '/evolucion', '/institute']) {
         const routePath = resolve(outputDirectory, route.slice(1), 'index.html')
         await mkdir(dirname(routePath), { recursive: true })
-        await writeFile(routePath, withRouteSeo(baseHtml, route, seoByRoute[route]))
+        await writeFile(routePath, withRouteSeo(baseHtml, route, SEO_BY_ROUTE[route]))
       }
     },
   }
@@ -59,5 +51,3 @@ function routeSeoHtml() {
 export default {
   plugins: [routeSeoHtml()],
 }
-import { mkdir, readFile, writeFile } from 'node:fs/promises'
-import { dirname, resolve } from 'node:path'

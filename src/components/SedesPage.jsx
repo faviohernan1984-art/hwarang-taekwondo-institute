@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import '../styles/sedes.css'
 
 const sede = {
@@ -35,25 +34,6 @@ function consultation(topic) {
 }
 
 export default function SedesPage() {
-  useEffect(() => {
-    const previousTitle = document.title
-    const existingDescription = document.querySelector('meta[name="description"]')
-    const description = existingDescription || document.createElement('meta')
-    const previousDescription = description.getAttribute('content')
-    if (!existingDescription) {
-      description.name = 'description'
-      document.head.appendChild(description)
-    }
-    document.title = 'Sede Rafaela | Taekwon-Do y Fuerza | HTI'
-    description.setAttribute('content', 'Conocé la sede de Hwarang Taekwon-Do Institute en Gimnasio La Máquina, Rafaela. Taekwon-Do y espacio FUERZA con atención de Favio Hernán.')
-    return () => {
-      document.title = previousTitle
-      if (!existingDescription) description.remove()
-      else if (previousDescription === null) description.removeAttribute('content')
-      else description.setAttribute('content', previousDescription)
-    }
-  }, [])
-
   return (
     <main className="sedes" id="sedes-contenido">
       <div className="sedes__experience">
@@ -66,7 +46,7 @@ export default function SedesPage() {
             <div className="sedes__introduction">
               <p className="sedes__venue">{sede.name}</p>
               <p className="sedes__address">{sede.address}</p>
-              <p>Hwarang Taekwon-Do Institute desarrolla sus actividades presenciales en Gimnasio La Máquina, Rafaela.</p>
+              <p>En esta sede, Hwarang Taekwon-Do Institute ofrece clases de Taekwon-Do en Rafaela y otras propuestas de formación presencial.</p>
               <p>Dos propuestas para formarte, entrenar y crecer</p>
             </div>
           </div>

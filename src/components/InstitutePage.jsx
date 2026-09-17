@@ -57,8 +57,21 @@ function InstituteSection({ index, children }) {
 export default function InstitutePage() {
   useEffect(() => {
     const previousTitle = document.title
+    const existingDescription = document.querySelector('meta[name="description"]')
+    const description = existingDescription || document.createElement('meta')
+    const previousDescription = description.getAttribute('content')
+    if (!existingDescription) {
+      description.name = 'description'
+      document.head.appendChild(description)
+    }
     document.title = 'Institute | Hwarang Taekwon-Do Institute'
-    return () => { document.title = previousTitle }
+    description.setAttribute('content', 'Hwarang Taekwon-Do Institute: formación marcial, humana y deportiva, e innovación para acompañar a cada persona en la construcción de su propio camino.')
+    return () => {
+      document.title = previousTitle
+      if (!existingDescription) description.remove()
+      else if (previousDescription === null) description.removeAttribute('content')
+      else description.setAttribute('content', previousDescription)
+    }
   }, [])
 
   return (

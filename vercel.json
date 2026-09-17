@@ -1,7 +1,27 @@
 {
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/sedes",
+      "destination": "/sedes/index.html"
+    },
+    {
+      "source": "/evolucion",
+      "destination": "/evolucion/index.html"
+    },
+    {
+      "source": "/institute",
+      "destination": "/institute/index.html"
+    },
+    {
+      "source": "/programas",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/historia",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/galeria",
       "destination": "/index.html"
     }
   ]

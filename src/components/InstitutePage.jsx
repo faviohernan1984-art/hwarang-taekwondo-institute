@@ -76,11 +76,27 @@ export default function InstitutePage() {
 
       <InstituteSection index={2}>
         <h2 id="hti-filosofia-title">NUESTRA FILOSOFÍA</h2>
-        <p className="hti-institute__statement">NO FORMAMOS PERSONAS PARA OBEDECER UN MODELO.<br />CREAMOS CONTEXTOS PARA QUE PUEDAN ELEGIR QUIÉNES QUIEREN SER.</p>
-        <p>El cuerpo, la emoción y la conversación forman parte de cómo aprendemos. Escuchar lo que nos pasa, reconocer nuestra manera de mirar una situación y abrirnos a otras perspectivas nos permite descubrir nuevas posibilidades de acción.</p>
-        <p>Acompañamos a cada persona a tomar sus propias elecciones, asumir responsabilidad por ellas y sostenerlas con acciones. Ese aprendizaje se construye en la práctica y en el encuentro con otros.</p>
-        <p className="hti-institute__statement">LA FORTALEZA NO SE IMPONE.<br />SE CONSTRUYE.</p>
-        <p className="hti-institute__statement">HACÉ DE VOS TU MAYOR FORTALEZA.</p>
+        <div className="hti-institute__philosophy-opening">
+          <p className="hti-institute__statement hti-institute__philosophy-manifesto">
+            <span>NO FORMAMOS PERSONAS PARA</span>
+            <span>OBEDECER UN MODELO.</span>
+            <span>CREAMOS CONTEXTOS PARA QUE</span>
+            <span>PUEDAN ELEGIR QUIÉNES QUIEREN</span>
+            <span>SER.</span>
+          </p>
+        </div>
+        <div className="hti-institute__philosophy-body">
+          <p>El cuerpo, la emoción y la conversación forman parte de cómo aprendemos. Escuchar lo que nos pasa, reconocer nuestra manera de mirar una situación y abrirnos a otras perspectivas nos permite descubrir nuevas posibilidades de acción.</p>
+          <p>Acompañamos a cada persona a tomar sus propias elecciones, asumir responsabilidad por ellas y sostenerlas con acciones. Ese aprendizaje se construye en la práctica y en el encuentro con otros.</p>
+        </div>
+        <div className="hti-institute__philosophy-closing">
+          <p className="hti-institute__statement hti-institute__philosophy-strength">
+            <span>LA FORTALEZA</span>
+            <span>NO SE IMPONE.</span>
+            <span className="hti-institute__philosophy-resolution">SE CONSTRUYE.</span>
+          </p>
+          <p className="hti-institute__statement hti-institute__philosophy-culmination">HACÉ DE VOS TU MAYOR FORTALEZA.</p>
+        </div>
       </InstituteSection>
 
       <InstituteSection index={3}>

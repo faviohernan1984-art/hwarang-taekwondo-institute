@@ -17,4 +17,8 @@ export const SEO_BY_ROUTE = {
     title: 'Hwarang Taekwon-Do Institute | Formación en Rafaela',
     description: 'Conocé la visión de Hwarang Taekwon-Do Institute y su propuesta de formación marcial, humana y deportiva en Rafaela, Santa Fe.',
   },
+  '/programas': {
+    title: 'Programas de Taekwon-Do en Rafaela | HTI',
+    description: 'Conocé los caminos de formación de HTI en Rafaela, Santa Fe: Taekwon-Do, formación integral, defensa personal, competencia, arbitraje e instructores.',
+  },
 }

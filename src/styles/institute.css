@@ -5,12 +5,14 @@
 }
 
 .hti-institute__section {
+  --hti-institute-gutter: max(1.25rem, calc((100vw - 1120px) / 2));
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 3rem;
+  position: relative;
   min-height: 100svh;
-  padding: 5rem max(1.25rem, calc((100vw - 1120px) / 2));
+  padding: 5rem var(--hti-institute-gutter);
   border-bottom: 1px solid var(--hti-dark-gray);
 }
 
@@ -141,19 +143,6 @@
   font-size: .88rem;
   line-height: 1.65;
 }
-#hti-instituto > .hti-institute__navigation {
-  position: relative;
-  z-index: 3;
-}
-#hti-instituto > .hti-institute__navigation button {
-  border-color: rgba(163, 13, 24, .72);
-  background: rgba(70, 6, 14, .56);
-  transition: border-color .2s ease, background-color .2s ease;
-}
-#hti-instituto > .hti-institute__navigation button:hover {
-  border-color: var(--hti-red-active);
-  background: rgba(120, 10, 22, .68);
-}
 .hti-institute h1, .hti-institute h2 {
   max-width: 24ch;
   margin: 0 0 1.75rem;
@@ -172,37 +161,179 @@
 .hti-institute__method { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem 3rem; padding-left: 1.75rem; }
 .hti-institute__method li { padding: .5rem; }
 .hti-institute__method li::marker { color: var(--hti-light-gray); }
-.hti-institute__navigation { display: flex; justify-content: space-between; gap: .75rem; }
+.hti-institute__navigation {
+  z-index: 3;
+  display: flex;
+  flex: 0 0 auto;
+  justify-content: space-between;
+  gap: .75rem;
+  width: 100%;
+}
 .hti-institute__navigation button {
   min-height: 44px;
   padding: .65rem .75rem;
-  border: 1px solid var(--hti-gray);
-  background: transparent;
+  border: 1px solid rgba(163, 13, 24, .72);
+  background: rgba(70, 6, 14, .56);
   color: inherit;
   font: inherit;
   font-size: .85rem;
   cursor: pointer;
+  transition: border-color .2s ease, background-color .2s ease;
 }
-.hti-institute__navigation button:disabled { opacity: .35; cursor: default; }
+.hti-institute__navigation button:enabled:is(:hover, :active) {
+  border-color: var(--hti-red-active);
+  background: rgba(120, 10, 22, .68);
+}
+.hti-institute__navigation button:disabled {
+  border-color: var(--hti-gray);
+  background: transparent;
+  opacity: .35;
+  cursor: default;
+}
 .hti-institute__cta { display: inline-flex; align-items: center; min-height: 48px; margin-top: 1rem; padding: .75rem 1.25rem; border: 1px solid var(--hti-red-active); text-decoration: none; }
-.hti-institute__navigation button:enabled:hover, .hti-institute__cta:hover { background: var(--hti-dark-gray); }
+.hti-institute__cta:hover { background: var(--hti-dark-gray); }
 .hti-institute :focus-visible { outline: 2px solid var(--hti-white); outline-offset: 4px; }
 .hti-institute__section:focus-visible { outline-offset: -4px; }
+
+#hti-filosofia {
+  position: relative;
+  overflow: hidden;
+}
+#hti-filosofia .hti-institute__content {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(20rem, .92fr);
+  grid-template-areas:
+    'eyebrow eyebrow'
+    'title title'
+    'opening body'
+    'closing closing';
+  column-gap: clamp(4rem, 10vw, 10rem);
+  row-gap: 0;
+  align-content: start;
+  width: 100%;
+  min-height: 0;
+  padding-block: clamp(1rem, 3vh, 2.5rem);
+}
+#hti-filosofia .hti-institute__eyebrow { grid-area: eyebrow; }
+#hti-filosofia h2 {
+  grid-area: title;
+  width: max-content;
+  margin-bottom: clamp(2.25rem, 5vh, 4rem);
+  font-size: clamp(2rem, 3.6vw, 3.5rem);
+}
+.hti-institute__philosophy-opening {
+  grid-area: opening;
+  max-width: 42rem;
+}
+.hti-institute__philosophy-manifesto {
+  margin-bottom: 0;
+  font-family: 'Marcellus', Georgia, serif;
+  font-size: clamp(1.2rem, 1.75vw, 1.7rem);
+  font-weight: 400;
+  line-height: 1.42;
+  letter-spacing: .025em;
+}
+.hti-institute__philosophy-manifesto span {
+  display: block;
+}
+.hti-institute__philosophy-manifesto span:nth-child(3) {
+  margin-top: .8em;
+}
+.hti-institute__philosophy-body {
+  grid-area: body;
+  align-self: end;
+  max-width: 34rem;
+  padding-top: clamp(1rem, 4vh, 3rem);
+  color: var(--hti-light-gray);
+}
+.hti-institute__philosophy-body p:last-child { margin-bottom: 0; }
+.hti-institute__philosophy-closing {
+  grid-area: closing;
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(12rem, .28fr);
+  gap: clamp(2.5rem, 7vw, 7rem);
+  align-items: end;
+  margin-top: clamp(2.5rem, 6vh, 4.5rem);
+  padding-top: clamp(1.5rem, 3vh, 2.25rem);
+}
+.hti-institute__philosophy-closing::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: clamp(7rem, 24vw, 17rem);
+  height: 1px;
+  background: rgba(163, 13, 24, .92);
+  content: '';
+  transform-origin: left;
+}
+.hti-institute__philosophy-closing .hti-institute__statement { margin-bottom: 0; }
+.hti-institute__philosophy-strength {
+  max-width: none;
+  font-family: 'Marcellus', Georgia, serif;
+  font-size: clamp(1.45rem, 2.3vw, 2.3rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -.02em;
+}
+.hti-institute__philosophy-strength > span {
+  display: block;
+}
+.hti-institute__philosophy-strength > span:first-child {
+  color: rgba(255, 255, 255, .62);
+}
+.hti-institute__philosophy-resolution {
+  width: max-content;
+  max-width: 100%;
+  margin-top: .12em;
+  color: var(--hti-white);
+  font-size: clamp(3.25rem, 7.3vw, 7.25rem);
+  line-height: .92;
+  letter-spacing: -.055em;
+}
+.hti-institute__philosophy-culmination {
+  align-self: end;
+  max-width: 18ch;
+  margin-bottom: .45em;
+  color: var(--hti-light-gray);
+  font-size: clamp(.78rem, 1vw, .95rem);
+  line-height: 1.55;
+  letter-spacing: .11em;
+  text-align: left;
+}
+
+#hti-filosofia:focus-within .hti-institute__philosophy-manifesto,
+#hti-filosofia:focus-within .hti-institute__philosophy-body {
+  animation: hti-philosophy-settle .7s cubic-bezier(.22, .61, .36, 1) both;
+}
+#hti-filosofia:focus-within .hti-institute__philosophy-body { animation-delay: .08s; }
+#hti-filosofia:focus-within .hti-institute__philosophy-resolution {
+  animation: hti-philosophy-resolve .85s .32s cubic-bezier(.22, .61, .36, 1) both;
+}
+#hti-filosofia:focus-within .hti-institute__philosophy-closing::before {
+  animation: hti-philosophy-accent .75s .2s cubic-bezier(.22, .61, .36, 1) both;
+}
+
+@keyframes hti-philosophy-settle {
+  from { opacity: .45; transform: translateY(.45rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes hti-philosophy-resolve {
+  from { opacity: .35; transform: translateY(.35rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes hti-philosophy-accent {
+  from { opacity: 0; transform: scaleX(0); }
+  to { opacity: 1; transform: scaleX(1); }
+}
 
 @media (min-width: 901px) {
   .hti-institute__section:first-child { overflow: hidden; }
   .hti-institute__section:first-child > .hti-institute__navigation {
-    position: relative;
     z-index: 5;
-  }
-  .hti-institute__section:first-child > .hti-institute__navigation button:last-child {
-    border-color: rgba(163, 13, 24, .72);
-    background: rgba(70, 6, 14, .56);
-    transition: border-color .2s ease, background-color .2s ease;
-  }
-  .hti-institute__section:first-child > .hti-institute__navigation button:last-child:hover {
-    border-color: var(--hti-red-active);
-    background: rgba(120, 10, 22, .68);
   }
   .hti-institute__opening-image {
     inset: -3rem min(-1.25rem, calc((1120px - 100vw) / 2)) -11rem 30%;
@@ -222,6 +353,28 @@
     transform: scale(1.18);
     transform-origin: 76% 72%;
   }
+}
+
+@media (min-width: 701px) {
+  .hti-institute__navigation {
+    position: absolute;
+    right: var(--hti-institute-gutter);
+    bottom: 5rem;
+    left: var(--hti-institute-gutter);
+    width: auto;
+  }
+  #hti-filosofia {
+    --hti-institute-navigation-reserve: 6.5rem;
+    height: 100svh;
+    min-height: 100svh;
+  }
+  #hti-filosofia .hti-institute__content {
+    align-content: center;
+    height: calc(100svh - 10rem - var(--hti-institute-navigation-reserve));
+    margin-block: 0 var(--hti-institute-navigation-reserve);
+    padding-block: 0;
+  }
+  #hti-filosofia h2 { margin-bottom: clamp(1.75rem, 4vh, 3rem); }
 }
 
 @media (min-width: 1101px) {
@@ -259,6 +412,26 @@
     gap: 1.75rem 2.5rem;
     padding-top: 3.5rem;
   }
+  #hti-filosofia .hti-institute__content {
+    grid-template-columns: minmax(0, 1fr) minmax(17rem, .78fr);
+    column-gap: clamp(2.75rem, 6vw, 4.5rem);
+  }
+  #hti-filosofia h2 { margin-bottom: clamp(1.25rem, 3vh, 2rem); }
+  .hti-institute__philosophy-manifesto { font-size: clamp(1.05rem, 1.8vw, 1.4rem); }
+  .hti-institute__philosophy-body {
+    align-self: end;
+    padding-top: 1rem;
+    font-size: .94rem;
+  }
+  .hti-institute__philosophy-closing {
+    grid-template-columns: minmax(0, 1fr) minmax(10rem, .3fr);
+    gap: clamp(2rem, 5vw, 3.5rem);
+    margin-top: clamp(1.75rem, 4vh, 3rem);
+    padding-top: clamp(1rem, 2vh, 1.5rem);
+  }
+  .hti-institute__philosophy-resolution {
+    font-size: clamp(3.1rem, 7.2vw, 5.35rem);
+  }
 }
 
 @media (max-width: 900px) {
@@ -288,7 +461,19 @@
 }
 
 @media (max-width: 700px) {
-  .hti-institute__section { padding-block: 3.5rem 2rem; gap: 2rem; }
+  .hti-institute__section {
+    height: auto;
+    min-height: 100svh;
+    padding-block: 3.5rem 2rem;
+    gap: 2rem;
+  }
+  .hti-institute__navigation {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    width: 100%;
+  }
   .hti-institute__opening-image {
     aspect-ratio: 4 / 3;
   }
@@ -318,15 +503,66 @@
     gap: 2rem;
   }
   #hti-instituto .hti-institute__pillars > div { padding-left: .85rem; }
-  .hti-institute__section:first-child > .hti-institute__navigation button:last-child {
-    border-color: rgba(163, 13, 24, .72);
-    background: rgba(70, 6, 14, .56);
-    transition: border-color .2s ease, background-color .2s ease;
+  #hti-filosofia .hti-institute__content {
+    display: flex;
+    flex-direction: column;
+    min-height: auto;
+    padding-block: 0;
   }
-  .hti-institute__section:first-child > .hti-institute__navigation button:last-child:is(:hover, :active) {
-    border-color: var(--hti-red-active);
-    background: rgba(120, 10, 22, .68);
+  #hti-filosofia h2 {
+    order: 1;
+    align-self: stretch;
+    width: 100%;
+    max-width: none;
+    margin-bottom: 2.25rem;
+    text-align: left;
+  }
+  #hti-filosofia .hti-institute__eyebrow { order: 0; }
+  .hti-institute__philosophy-opening {
+    order: 2;
+    max-width: none;
+  }
+  .hti-institute__philosophy-manifesto {
+    font-size: clamp(1.15rem, 5.2vw, 1.4rem);
+    line-height: 1.42;
+  }
+  .hti-institute__philosophy-body {
+    order: 3;
+    max-width: none;
+    padding-top: 2.75rem;
+  }
+  .hti-institute__philosophy-closing {
+    order: 4;
+    display: block;
+    margin-top: 3.75rem;
+    padding-top: 1.5rem;
+  }
+  .hti-institute__philosophy-strength {
+    max-width: none;
+    font-size: clamp(1.35rem, 6vw, 1.8rem);
+  }
+  .hti-institute__philosophy-resolution {
+    max-width: 100%;
+    font-size: clamp(2.75rem, 14vw, 4.8rem);
+    overflow-wrap: normal;
+  }
+  .hti-institute__philosophy-culmination {
+    justify-self: auto;
+    max-width: 19ch;
+    margin-top: 2.25rem;
+    margin-bottom: 0;
+    text-align: left;
   }
   .hti-institute__pillars, .hti-institute__method { grid-template-columns: 1fr; }
   .hti-institute__navigation button { font-size: .75rem; padding-inline: .5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hti-institute__navigation button { transition: none; }
+  #hti-filosofia:focus-within .hti-institute__philosophy-manifesto,
+  #hti-filosofia:focus-within .hti-institute__philosophy-body,
+  #hti-filosofia:focus-within .hti-institute__philosophy-resolution,
+  #hti-filosofia:focus-within .hti-institute__philosophy-closing::before {
+    animation: none;
+  }
 }

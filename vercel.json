@@ -14,7 +14,7 @@
     },
     {
       "source": "/programas",
-      "destination": "/index.html"
+      "destination": "/programas/index.html"
     },
     {
       "source": "/historia",

@@ -39,7 +39,7 @@ function routeSeoHtml() {
 
       await writeFile(indexPath, withRouteSeo(baseHtml, '/', SEO_BY_ROUTE['/']))
 
-      for (const route of ['/sedes', '/evolucion', '/institute']) {
+      for (const route of ['/sedes', '/evolucion', '/institute', '/programas']) {
         const routePath = resolve(outputDirectory, route.slice(1), 'index.html')
         await mkdir(dirname(routePath), { recursive: true })
         await writeFile(routePath, withRouteSeo(baseHtml, route, SEO_BY_ROUTE[route]))

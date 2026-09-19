@@ -377,6 +377,19 @@
   #hti-filosofia h2 { margin-bottom: clamp(1.75rem, 4vh, 3rem); }
 }
 
+@media (min-width: 1110px) and (max-width: 1600px) {
+  .hti-institute__section {
+    clip-path: inset(0);
+  }
+  .hti-institute__navigation {
+    position: fixed;
+    right: 1.5rem;
+    /* Scene 02 reference at 1536 x 703 CSS px: bottom edge at y = 692.7px. */
+    bottom: 10.3px;
+    left: 1.5rem;
+  }
+}
+
 @media (min-width: 1101px) {
   #hti-instituto::before {
     background-position: 0% 48%;

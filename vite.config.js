@@ -20,9 +20,15 @@ function withRouteSeo(html, route, seo) {
     .replace(titlePattern, `<title>${seo.title}</title>`)
 
   const canonical = `<link rel="canonical" href="${SITE_URL}${route}" />`
-  return canonicalPattern.test(routeHtml)
+  const canonicalHtml = canonicalPattern.test(routeHtml)
     ? routeHtml.replace(canonicalPattern, canonical)
     : routeHtml.replace(`<title>${seo.title}</title>`, `${canonical}\n    <title>${seo.title}</title>`)
+
+  if (!seo.structuredData) return canonicalHtml
+
+  // Escape '<' so data cannot terminate the script element in HTML.
+  const jsonLd = JSON.stringify(seo.structuredData, null, 2).replaceAll('<', '\\u003c')
+  return canonicalHtml.replace('</head>', () => `<script type="application/ld+json">\n${jsonLd}\n    </script>\n  </head>`)
 }
 
 function routeSeoHtml() {

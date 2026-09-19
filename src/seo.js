@@ -6,8 +6,23 @@ export const SEO_BY_ROUTE = {
     description: 'Formación de Taekwon-Do en Rafaela, Santa Fe. En Hwarang Taekwon-Do Institute acompañamos cada camino con disciplina, crecimiento y comunidad.',
   },
   '/sedes': {
-    title: 'Sede Rafaela | Hwarang Taekwon-Do Institute',
-    description: 'Conocé la sede Rafaela de Hwarang Taekwon-Do Institute en Gimnasio La Máquina, Santa Fe: clases de Taekwon-Do y espacio FUERZA.',
+    title: 'Taekwon-Do en Rafaela | Hwarang Taekwon-Do Institute',
+    description: 'Clases de Taekwon-Do en Rafaela, Santa Fe. Conocé la sede de Hwarang Taekwon-Do Institute en Gimnasio La Máquina, Bv. G. Lehmann 883.',
+    structuredData: {
+      '@context': 'https://schema.org',
+      '@type': 'LocalBusiness',
+      '@id': `${SITE_URL}/#organization`,
+      name: 'Hwarang Taekwon-Do Institute',
+      url: `${SITE_URL}/sedes`,
+      telephone: '+5493492611568',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Bv. G. Lehmann 883',
+        addressLocality: 'Rafaela',
+        addressRegion: 'Santa Fe',
+        addressCountry: 'AR',
+      },
+    },
   },
   '/evolucion': {
     title: 'Evolución institucional | Hwarang Taekwon-Do Institute',

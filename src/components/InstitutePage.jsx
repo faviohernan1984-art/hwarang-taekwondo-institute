@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react'
 import '../styles/institute.css'
 
 const sections = [
@@ -53,6 +54,102 @@ function InstituteSection({ index, children }) {
   )
 }
 
+const methodSteps = [
+  ['OBSERVAR', 'Reconocer dónde estamos.'],
+  ['ELEGIR', 'Definir hacia dónde ir.'],
+  ['COMPROMETERSE', 'Asumir la elección.'],
+  ['ENTRENAR', 'Convertirla en práctica.'],
+  ['TRANSFORMAR', 'Hacer propio lo aprendido.'],
+  ['TRANSMITIR', 'Compartir lo aprendido.'],
+]
+const methodArcs = methodSteps.map((_, index) => {
+  const point = angle => [50 + 32 * Math.sin(angle), 50 - 32 * Math.cos(angle)]
+  const start = point(index * Math.PI / 3)
+  const end = point((index + 1) * Math.PI / 3)
+  const middle = point((index + .5) * Math.PI / 3)
+  return {
+    path: `M ${start.join(' ')} A 32 32 0 0 1 ${end.join(' ')}`,
+    arrow: `translate(${middle.join(' ')}) rotate(${(index + .5) * 60})`,
+  }
+})
+
+function MethodCycle() {
+  const [active, setActive] = useState(0)
+  const [restart, setRestart] = useState(0)
+  const [paused, setPaused] = useState(false)
+  const [focused, setFocused] = useState(false)
+  const [visible, setVisible] = useState(false)
+  const [reduced, setReduced] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+  const cycleRef = useRef(null)
+  const running = !reduced && !paused && !focused && visible
+
+  useEffect(() => {
+    const preference = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const update = () => setReduced(preference.matches)
+    preference.addEventListener('change', update)
+    const observer = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting), { threshold: .25 })
+    observer.observe(cycleRef.current)
+    return () => {
+      preference.removeEventListener('change', update)
+      observer.disconnect()
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!running) return
+    const timer = window.setTimeout(() => setActive(step => (step + 1) % methodSteps.length), 4500)
+    return () => window.clearTimeout(timer)
+  }, [active, restart, running])
+
+  return (
+    <div className="hti-institute__method-cycle" ref={cycleRef}
+      data-running={running} data-return={active === 5}
+      onFocusCapture={() => setFocused(true)}
+      onBlurCapture={event => {
+        if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false)
+      }}>
+      <div className="hti-institute__method-orbit">
+      <svg className="hti-institute__method-ring" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+        {methodArcs.map((arc, index) => (
+          <g key={index} className={index === 5 ? 'hti-institute__method-return' : undefined}>
+            <path d={arc.path} />
+            <path d="M -1 -1 L 0 0 L -1 1" transform={arc.arrow} />
+          </g>
+        ))}
+        <path key={`${active}-${restart}-${running}`} d={methodArcs[active].path} pathLength="1"
+          className="hti-institute__method-progress" />
+      </svg>
+      <div className="hti-institute__method-center">
+        <strong>HTI</strong>
+        <span>MÁS QUE<br />TAEKWON-DO</span>
+      </div>
+      <ol className="hti-institute__method" role="list" aria-label="Ciclo del método HTI: de observar a transmitir y volver a observar">
+        {methodSteps.map(([step, description], index) => (
+          <li key={step}>
+            <button type="button" aria-pressed={active === index}
+              aria-label={`${String(index + 1).padStart(2, '0')} ${step}: ${description}`}
+              onClick={() => { setActive(index); setRestart(value => value + 1) }}>
+              <span className="hti-institute__method-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+              <span>{index === 2 ? <>COMPRO<wbr />METERSE</> : index === 4 ? <>TRANS<wbr />FORMAR</> : step}</span>
+            </button>
+          </li>
+        ))}
+      </ol>
+      </div>
+      <div className="hti-institute__method-caption">
+        <p className="hti-institute__method-card" key={active}>
+          {methodSteps[active][1]}
+        </p>
+        {!reduced && <button className="hti-institute__method-pause" type="button"
+          aria-label={paused ? 'Reanudar el ciclo automático' : 'Pausar el ciclo automático'}
+          aria-pressed={paused} onClick={() => setPaused(value => !value)}>
+          {paused ? 'Reanudar' : 'Pausar'}
+        </button>}
+      </div>
+    </div>
+  )
+}
+
 export default function InstitutePage() {
   return (
     <main className="hti-institute">
@@ -100,12 +197,10 @@ export default function InstitutePage() {
       </InstituteSection>
 
       <InstituteSection index={3}>
-        <h2 id="hti-metodo-title">MÉTODO HTI</h2>
-        <p>Todo proceso comienza con una elección. Observar dónde estamos y qué queremos construir nos ayuda a elegir un camino y a reconocer los compromisos que estamos dispuestos a asumir.</p>
+        <h2 id="hti-metodo-title"><span>MÉTODO</span>{' '}<span>HTI</span></h2>
+        <p>Todo proceso comienza con la observación. Observar dónde estamos y qué queremos construir nos ayuda a elegir un camino y a reconocer los compromisos que estamos dispuestos a asumir.</p>
         <p>El entrenamiento convierte esa elección en práctica. Al sostenerla, podemos transformar nuestra manera de actuar y transmitir a otros lo aprendido.</p>
-        <ol className="hti-institute__method">
-          {['OBSERVAR', 'ELEGIR', 'COMPROMETERSE', 'ENTRENAR', 'TRANSFORMAR', 'TRANSMITIR'].map(step => <li key={step}>{step}</li>)}
-        </ol>
+        <MethodCycle />
       </InstituteSection>
 
       <InstituteSection index={4}>

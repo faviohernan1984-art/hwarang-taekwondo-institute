@@ -151,6 +151,23 @@ function MethodCycle() {
 }
 
 export default function InstitutePage() {
+  useEffect(() => {
+    const section = document.getElementById('hti-direccion')
+    if (!section) return
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting || entry.intersectionRatio <= .05) {
+        section.removeAttribute('data-direction-entered')
+      } else if (entry.intersectionRatio >= .15 && !section.hasAttribute('data-direction-entered')) {
+        section.setAttribute('data-direction-entered', '')
+      }
+    }, { threshold: [.05, .15] })
+    observer.observe(section)
+    return () => {
+      observer.disconnect()
+      section.removeAttribute('data-direction-entered')
+    }
+  }, [])
+
   return (
     <main className="hti-institute">
       <InstituteSection index={0}>
@@ -204,7 +221,10 @@ export default function InstitutePage() {
       </InstituteSection>
 
       <InstituteSection index={4}>
-        <h2 id="hti-direccion-title">UNA VISIÓN. UNA DIRECCIÓN.</h2>
+        <h2 id="hti-direccion-title"><span>UNA VISIÓN.</span>{' '}<span>UNA DIRECCIÓN.</span></h2>
+        <div className="hti-institute__portrait">
+          <img src="/images/favio-hernan-direccion.png" alt="Favio Hernán Albornoz" width="3508" height="4961" loading="lazy" decoding="async" />
+        </div>
         <p className="hti-institute__statement">Favio Hernán Albornoz</p>
         <p>Instructor Internacional de Taekwon-Do ITF<br />Coach Ontológico Profesional</p>
         <p>Desde la dirección de HTI, integra la formación marcial y el acompañamiento humano. La enseñanza no parte únicamente de qué debe hacer una persona, sino también de cómo observa, cómo conversa, cómo elige y qué compromisos está dispuesta a asumir.</p>

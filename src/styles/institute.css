@@ -1300,7 +1300,7 @@
   }
   #hti-competencia[data-competition-entered] .hti-institute__competition-main img {
     /* Backwards fill hides the delay; no animated clipping survives completion. */
-    animation: hti-competition-reveal 1.2s 1.3s cubic-bezier(.22, .61, .36, 1) backwards;
+    animation: hti-competition-reveal var(--hti-competition-photo-duration, 1.2s) var(--hti-competition-photo-delay, 1.3s) cubic-bezier(.22, .61, .36, 1) backwards;
   }
 }
 
@@ -1346,4 +1346,294 @@
     translate: 0 0;
     clip-path: inset(0);
   }
+}
+
+/* Scene 06 experiment: draw the photo edge overlapping the end of its reveal, notebook and wide desktop only. */
+@media (min-width: 1110px) {
+  #hti-competencia {
+    --hti-competition-photo-delay: 1.3s;
+    --hti-competition-photo-duration: 1.2s;
+  }
+  #hti-competencia .hti-institute__competition-main::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    /* Match the existing image box without changing its size or lateral mask. */
+    width: min(100%, 50vw);
+    height: 100%;
+    background: linear-gradient(#681423, #681423) left / 5px 100% no-repeat;
+    pointer-events: none;
+    transform-origin: left bottom;
+  }
+}
+@media (min-width: 1601px) {
+  #hti-competencia .hti-institute__competition-main::after {
+    bottom: -15%;
+    height: auto;
+    aspect-ratio: 1365 / 2048;
+  }
+}
+@media (min-width: 1110px) and (prefers-reduced-motion: no-preference) {
+  #hti-competencia .hti-institute__competition-main::after {
+    transform: scaleY(0);
+  }
+  #hti-competencia[data-competition-entered] .hti-institute__competition-main::after {
+    animation: hti-competition-edge-rise .85s cubic-bezier(.22, .61, .36, 1) both;
+    animation-delay: calc(var(--hti-competition-photo-delay) + var(--hti-competition-photo-duration) - .55s);
+  }
+}
+@keyframes hti-competition-edge-rise {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+/* Scene 07-C: one unmodified tapestry on pure black, with no photographic filler. */
+@media (min-width: 1110px) {
+  #hti-innovacion {
+    --hti-institute-gutter: max(2rem, 6vw);
+    background-color: #000;
+    --hti-innovation-image: url('/images/institute/innovation/innovation-hsu-tapestry.jpg');
+    /* 07-B scale x .95, capped to contain the complete 16:9 JPG. */
+    --hti-innovation-width: min(100%, 177.777778svh, max(90.25%, 160.444444svh));
+    background-size: var(--hti-innovation-width) auto;
+    background-position: right center;
+    background-repeat: no-repeat;
+  }
+  #hti-innovacion .hti-institute__content {
+    width: min(40rem, 44vw);
+  }
+  #hti-innovacion h2 {
+    max-width: none;
+    font-size: clamp(2rem, 2.4vw, 2.8rem);
+  }
+}
+@media (min-width: 1110px) and (max-width: 1600px) {
+  #hti-innovacion {
+    /* 07-B scale x .90; showing the whole JPG takes priority over exact scale. */
+    --hti-innovation-width: min(100%, 177.777778svh, max(85.5%, 152svh));
+    background-position: right center;
+  }
+}
+/* Scene 07-H: irregular smoke straddling the seam; preserve approved glyph shadows. */
+@media (min-width: 1110px) {
+  #hti-innovacion::before {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    bottom: 0;
+    left: calc(100% - var(--hti-innovation-width) - 50px);
+    width: 160px;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 85px 20% at 46px 4%, rgba(0, 0, 0, .94) 8%, rgba(0, 0, 0, .4) 36%, transparent 100%),
+      radial-gradient(ellipse 110px 22% at 43px 23%, rgba(0, 0, 0, .88) 7%, rgba(0, 0, 0, .32) 40%, transparent 100%),
+      radial-gradient(ellipse 72px 19% at 54px 42%, rgba(0, 0, 0, .96) 9%, rgba(0, 0, 0, .42) 34%, transparent 100%),
+      radial-gradient(ellipse 100px 21% at 48px 61%, rgba(0, 0, 0, .9) 8%, rgba(0, 0, 0, .35) 38%, transparent 100%),
+      radial-gradient(ellipse 80px 20% at 56px 80%, rgba(0, 0, 0, .94) 8%, rgba(0, 0, 0, .4) 34%, transparent 100%),
+      radial-gradient(ellipse 108px 18% at 42px 98%, rgba(0, 0, 0, .88) 7%, rgba(0, 0, 0, .32) 40%, transparent 100%);
+  }
+  #hti-innovacion .hti-institute__content {
+    position: relative;
+    z-index: 2;
+  }
+  #hti-innovacion .hti-institute__eyebrow,
+  #hti-innovacion h2,
+  #hti-innovacion .hti-institute__content > p:not(.hti-institute__eyebrow),
+  #hti-innovacion .hti-institute__navigation button:last-child {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, .95), 0 2px 5px rgba(0, 0, 0, .9), 0 4px 10px rgba(0, 0, 0, .65);
+  }
+}
+/* Scene 07-H: 12% more title scale on wide desktop only. */
+@media (min-width: 1601px) {
+  #hti-innovacion h2 {
+    font-size: clamp(2.24rem, 2.688vw, 3.136rem);
+    max-width: 100%;
+  }
+}
+/* Narrow only the narrative paragraphs, leaving their existing type and spacing. */
+@media (min-width: 1110px) {
+  #hti-innovacion .hti-institute__content > p:not(.hti-institute__eyebrow) {
+    max-width: 44ch;
+  }
+}
+@media (min-width: 1110px) and (max-width: 1600px) {
+  #hti-innovacion .hti-institute__content > p:not(.hti-institute__eyebrow) {
+    max-width: 42ch;
+  }
+}
+/* Scene 07-K: taller mobile panorama followed by navigation in normal flow. */
+@media (max-width: 700px) {
+  #hti-innovacion {
+    background-color: #000;
+    gap: 0;
+    padding-bottom: 0;
+    --hti-innovation-panorama-height: clamp(300px, 46svh, 410px);
+  }
+  #hti-innovacion .hti-institute__content {
+    /* Replace the former empty photo reserve with a gap after the unchanged copy/link. */
+    padding-bottom: 2rem;
+  }
+  #hti-innovacion::after {
+    content: '';
+    position: relative;
+    order: 1;
+    flex: 0 0 auto;
+    z-index: 0;
+    width: calc(100% + 2 * var(--hti-institute-gutter));
+    margin-inline: calc(-1 * var(--hti-institute-gutter));
+    height: var(--hti-innovation-panorama-height);
+    pointer-events: none;
+    background-image: url('/images/institute/innovation/innovation-hsu-tapestry.jpg');
+    /* Fill the window proportionally; retain horizontal travel on wider phones too. */
+    background-size: max(120%, calc(var(--hti-innovation-panorama-height) * 16 / 9)) auto;
+    background-position: 50% center;
+    background-repeat: no-repeat;
+    filter: brightness(.68);
+  }
+  #hti-innovacion .hti-institute__navigation {
+    order: 2;
+    padding-block: 2rem 2.5rem;
+  }
+  #hti-innovacion .hti-institute__navigation button {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, .95), 0 2px 5px rgba(0, 0, 0, .8);
+  }
+}
+@media (max-width: 700px) and (prefers-reduced-motion: no-preference) {
+  #hti-innovacion::after {
+    animation: hti-innovation-mobile-pan 16s ease-in-out infinite alternate;
+  }
+}
+@keyframes hti-innovation-mobile-pan {
+  from { background-position: 15% center; }
+  to { background-position: 100% center; }
+}
+/* Use Scene 07's wide-desktop navigation coordinates without moving scene content.
+   Notebook already shares 1.5rem sides / 10.3px bottom; mobile remains unchanged. */
+@media (min-width: 1601px) {
+  .hti-institute__navigation {
+    left: max(2rem, 6vw);
+    right: max(2rem, 6vw);
+    bottom: 5rem;
+  }
+  #hti-pertenencia .hti-institute__cta {
+    right: max(2rem, 6vw);
+    bottom: calc(5rem + 44px + 1rem);
+  }
+}
+
+/* Scene 07-I: one photo layer, native title wrapping and a finite entrance. */
+#hti-innovacion .hti-institute__innovation-line { display: none; }
+#hti-innovacion .hti-institute__innovation-link {
+  display: inline-block;
+  max-width: 100%;
+  color: #c2bfba;
+  font-size: .75rem;
+  line-height: 1.6;
+  letter-spacing: .08em;
+  text-decoration: underline;
+  text-decoration-color: #681423;
+  text-underline-offset: .45em;
+  text-decoration-thickness: 1px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .95), 0 2px 5px rgba(0, 0, 0, .9);
+}
+#hti-innovacion .hti-institute__innovation-link > span { display: inline-block; }
+@media (min-width: 1110px) {
+  #hti-innovacion::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: var(--hti-innovation-image);
+    background-size: inherit;
+    background-position: inherit;
+    background-repeat: no-repeat;
+  }
+  #hti-innovacion h2 { position: relative; }
+  #hti-innovacion .hti-institute__innovation-link {
+    position: absolute;
+    top: 100%;
+    left: 0;
+  }
+  #hti-innovacion .hti-institute__innovation-link:is(:hover, :focus-visible) {
+    color: var(--hti-white);
+    text-decoration-color: var(--hti-red-active);
+  }
+}
+@media (min-width: 1110px) and (prefers-reduced-motion: no-preference) {
+  #hti-innovacion .hti-institute__innovation-link {
+    transition: color .2s ease, text-decoration-color .2s ease;
+  }
+  #hti-innovacion .hti-institute__innovation-link > span { transition: transform .2s ease; }
+  #hti-innovacion .hti-institute__innovation-link:is(:hover, :focus-visible) > span { transform: translateX(4px); }
+  #hti-innovacion[data-innovation-entered]:not([data-innovation-settled]) {
+    --innovation-easing: cubic-bezier(.22, .61, .36, 1);
+  }
+  #hti-innovacion[data-innovation-entered]:not([data-innovation-settled])::after {
+    animation: hti-innovation-photo 1.2s var(--innovation-easing) backwards;
+  }
+  #hti-innovacion[data-innovation-entered]:not([data-innovation-settled])::before {
+    animation: hti-innovation-fade .8s .45s var(--innovation-easing) backwards;
+  }
+  #hti-innovacion[data-innovation-entered]:not([data-innovation-settled]) .hti-institute__eyebrow {
+    animation: hti-innovation-enter .5s .8s var(--innovation-easing) backwards;
+  }
+  #hti-innovacion[data-innovation-entered]:not([data-innovation-settled]) [data-innovation-lines] .hti-institute__innovation-title-text {
+    opacity: 0;
+  }
+  #hti-innovacion[data-innovation-entered]:not([data-innovation-settled]) .hti-institute__innovation-line {
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(var(--innovation-line) * 1lh);
+    height: 1lh;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  #hti-innovacion[data-innovation-entered]:not([data-innovation-settled]) .hti-institute__innovation-line-text {
+    display: block;
+    position: relative;
+    top: calc(var(--innovation-line) * -1lh);
+    /* Clip the source line before moving it, so adjacent lines never enter its mask. */
+    clip-path: inset(calc(var(--innovation-line) * 1lh) 0 calc(100% - (var(--innovation-line) + 1) * 1lh) 0);
+    animation: hti-innovation-line .65s calc(1s + var(--innovation-line) * .12s) var(--innovation-easing) backwards;
+  }
+  #hti-innovacion[data-innovation-entered]:not([data-innovation-settled]) .hti-institute__content > p:not(.hti-institute__eyebrow) {
+    animation: hti-innovation-paragraph .65s 1.75s var(--innovation-easing) backwards;
+  }
+  #hti-innovacion[data-innovation-entered]:not([data-innovation-settled]) .hti-institute__content > p:not(.hti-institute__eyebrow) + p {
+    animation-delay: 1.95s;
+  }
+  #hti-innovacion[data-innovation-entered]:not([data-innovation-settled]) .hti-institute__innovation-link {
+    animation: hti-innovation-enter .5s 2.25s var(--innovation-easing) backwards;
+  }
+  #hti-innovacion[data-innovation-entered]:not([data-innovation-settled]) .hti-institute__navigation {
+    animation: hti-innovation-navigation .55s 2.55s ease-out backwards;
+  }
+}
+@keyframes hti-innovation-photo {
+  from { opacity: 0; transform: translateX(30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes hti-innovation-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes hti-innovation-enter {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes hti-innovation-line {
+  from { opacity: 0; transform: translateY(1lh); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes hti-innovation-paragraph {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes hti-innovation-navigation {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

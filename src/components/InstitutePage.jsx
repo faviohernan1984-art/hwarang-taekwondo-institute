@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import '../styles/institute.css'
 
 const sections = [
@@ -150,6 +150,73 @@ function MethodCycle() {
   )
 }
 
+// Measure the original inline text; animated copies never determine title layout.
+function InnovationTitle({ children }) {
+  const textRef = useRef(null)
+  const [lineCount, setLineCount] = useState(0)
+
+  useLayoutEffect(() => {
+    const text = textRef.current
+    let disposed = false
+    const measure = () => {
+      if (!disposed) setLineCount(text.getClientRects().length)
+    }
+    const observer = new ResizeObserver(measure)
+    observer.observe(text.parentElement)
+    measure()
+    document.fonts.ready.then(measure)
+    return () => { disposed = true; observer.disconnect() }
+  }, [])
+
+  useEffect(() => {
+    if (!lineCount) return
+    const section = textRef.current.closest('#hti-innovacion')
+    const motion = window.matchMedia('(min-width: 1110px) and (prefers-reduced-motion: no-preference)')
+    const reset = () => {
+      section.removeAttribute('data-innovation-entered')
+      section.removeAttribute('data-innovation-settled')
+    }
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!motion.matches || !entry.isIntersecting || entry.intersectionRatio <= .05) {
+        reset()
+      } else if (entry.intersectionRatio >= .15) {
+        section.setAttribute('data-innovation-entered', '')
+      }
+    }, { threshold: [.05, .15] })
+    const refresh = () => {
+      reset()
+      observer.disconnect()
+      if (motion.matches) observer.observe(section)
+    }
+    const finish = event => {
+      if (event.animationName === 'hti-innovation-navigation') {
+        section.setAttribute('data-innovation-settled', '')
+      }
+    }
+    refresh()
+    motion.addEventListener('change', refresh)
+    section.addEventListener('animationend', finish)
+    return () => {
+      observer.disconnect()
+      motion.removeEventListener('change', refresh)
+      section.removeEventListener('animationend', finish)
+      reset()
+    }
+  }, [lineCount])
+
+  return (
+    <h2 id="hti-innovacion-title" data-innovation-lines={lineCount || undefined}>
+      <span ref={textRef} className="hti-institute__innovation-title-text">{children}</span>
+      {Array.from({ length: lineCount }, (_, index) => (
+        <span className="hti-institute__innovation-line" aria-hidden="true" key={index}
+          style={{ '--innovation-line': index }}>
+          <span className="hti-institute__innovation-line-text">{children}</span>
+        </span>
+      ))}
+    </h2>
+  )
+}
+
 export default function InstitutePage() {
   useEffect(() => {
     const section = document.getElementById('hti-competencia')
@@ -260,9 +327,13 @@ export default function InstitutePage() {
       </InstituteSection>
 
       <InstituteSection index={6}>
-        <h2 id="hti-innovacion-title">OBSERVAR TAMBIÉN ES PREGUNTARNOS SI LAS COSAS PUEDEN HACERSE DE OTRA MANERA.</h2>
+        <InnovationTitle>OBSERVAR TAMBIÉN ES PREGUNTARNOS SI LAS COSAS PUEDEN HACERSE DE OTRA MANERA.</InnovationTitle>
         <p>La práctica nos invita a revisar lo conocido, escuchar necesidades y explorar nuevas respuestas. Innovar es llevar esas preguntas a la acción.</p>
         <p><strong>Hwarang Scoring Universe®</strong> es un desarrollo tecnológico nacido dentro del ecosistema HTI. Expresa nuestro compromiso con aportar al futuro del Taekwon-Do desde la experiencia y el aprendizaje compartido.</p>
+        <a className="hti-institute__innovation-link" href="https://www.hwarangscoring.org/"
+          target="_blank" rel="noopener noreferrer">
+          CONOCÉ HWARANG SCORING UNIVERSE <span aria-hidden="true">→</span>
+        </a>
       </InstituteSection>
 
       <InstituteSection index={7}>

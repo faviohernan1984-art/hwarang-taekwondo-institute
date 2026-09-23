@@ -219,6 +219,47 @@ function InnovationTitle({ children }) {
 
 export default function InstitutePage() {
   useEffect(() => {
+    const section = document.getElementById('hti-pertenencia')
+    if (!section) return
+    const motion = window.matchMedia('(prefers-reduced-motion: no-preference)')
+    const reset = () => {
+      section.removeAttribute('data-belonging-entered')
+      section.removeAttribute('data-belonging-settled')
+    }
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!motion.matches || !entry.isIntersecting || entry.intersectionRatio <= .05) {
+        reset()
+      } else if (entry.intersectionRatio >= .15) {
+        section.setAttribute('data-belonging-entered', '')
+      }
+    }, { threshold: [.05, .15] })
+    const refresh = () => {
+      reset()
+      observer.disconnect()
+      if (motion.matches) observer.observe(section)
+    }
+    const finish = event => {
+      if (event.animationName === 'hti-belonging-navigation') {
+        section.setAttribute('data-belonging-settled', '')
+      }
+    }
+    const revealFocusedControl = event => {
+      if (event.target.closest('a, button')) section.setAttribute('data-belonging-settled', '')
+    }
+    refresh()
+    motion.addEventListener('change', refresh)
+    section.addEventListener('animationend', finish)
+    section.addEventListener('focusin', revealFocusedControl)
+    return () => {
+      observer.disconnect()
+      motion.removeEventListener('change', refresh)
+      section.removeEventListener('animationend', finish)
+      section.removeEventListener('focusin', revealFocusedControl)
+      reset()
+    }
+  }, [])
+
+  useEffect(() => {
     const section = document.getElementById('hti-competencia')
     if (!section) return
     const observer = new IntersectionObserver(([entry]) => {
@@ -337,11 +378,16 @@ export default function InstitutePage() {
       </InstituteSection>
 
       <InstituteSection index={7}>
-        <h2 id="hti-pertenencia-title">HTI NO ES SOLAMENTE UN LUGAR AL QUE SE VIENE A ENTRENAR.<br />ES UN ESPACIO QUE CONSTRUIMOS ENTRE QUIENES ELEGIMOS SER PARTE.</h2>
+        <h2 id="hti-pertenencia-title"><span>HTI NO ES SOLAMENTE UN LUGAR AL QUE SE VIENE A ENTRENAR.</span>{' '}<span>ES UN ESPACIO QUE CONSTRUIMOS ENTRE QUIENES ELEGIMOS SER PARTE.</span></h2>
         <p>Cada persona aporta su historia, sus preguntas y su compromiso. La pertenencia crece en lo cotidiano: al entrenar juntos, escucharnos y acompañar el camino de otros.</p>
         <p className="hti-institute__statement">TU PRÓXIMA VERSIÓN NO SE ENCUENTRA.<br />SE CONSTRUYE.</p>
         <p className="hti-institute__statement">HACÉ DE VOS TU MAYOR FORTALEZA.</p>
-        <a className="hti-institute__cta" href="/#contacto">QUIERO COMENZAR</a>
+        <div className="hti-institute__belonging-photo">
+          <img src="/images/institute/belonging/belonging-community.jpg"
+            alt="Instructor junto a alumnos de Taekwon-Do y familias reunidas durante una actividad comunitaria"
+            width="2048" height="1365" loading="lazy" decoding="async" />
+        </div>
+        <a className="hti-institute__cta" href="https://wa.me/5493492611568" target="_blank" rel="noopener noreferrer">QUIERO EMPEZAR TAEKWON-DO →</a>
       </InstituteSection>
     </main>
   )

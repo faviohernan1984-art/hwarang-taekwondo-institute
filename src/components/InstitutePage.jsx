@@ -152,6 +152,24 @@ function MethodCycle() {
 
 export default function InstitutePage() {
   useEffect(() => {
+    const section = document.getElementById('hti-competencia')
+    if (!section) return
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting || entry.intersectionRatio <= .05) {
+        section.removeAttribute('data-competition-entered')
+      } else if (entry.intersectionRatio >= .15) {
+        section.setAttribute('data-competition-entered', '')
+      }
+    }, { threshold: [.05, .15] })
+    observer.observe(section)
+    return () => {
+      observer.disconnect()
+      section.removeAttribute('data-competition-entered')
+    }
+  }, [])
+
+
+  useEffect(() => {
     const section = document.getElementById('hti-direccion')
     if (!section) return
     const observer = new IntersectionObserver(([entry]) => {
@@ -231,9 +249,14 @@ export default function InstitutePage() {
       </InstituteSection>
 
       <InstituteSection index={5}>
-        <h2 id="hti-competencia-title">CUANDO LA ELECCIÓN SE CONVIERTE EN COMPROMISO, APARECEN NUEVOS DESAFÍOS.</h2>
+        <h2 id="hti-competencia-title"><span>CUANDO LA ELECCIÓN SE</span>{' '}<span>CONVIERTE EN COMPROMISO,</span>{' '}<span>APARECEN NUEVOS DESAFÍOS.</span></h2>
         <p>La competencia y el alto rendimiento no son un punto de partida ni una obligación. Aparecen como posibilidades para quienes eligen ese recorrido y sostienen, con tiempo y acciones, el compromiso que requiere.</p>
         <p>Los torneos ofrecen un contexto de aprendizaje: prepararnos, actuar bajo presión, reconocer lo aprendido y revisar lo que necesitamos trabajar. El podio puede ser un resultado; no es el propósito que define a la persona ni la medida de su valor.</p>
+        <div className="hti-institute__competition-images">
+          <div className="hti-institute__competition-main">
+            <img src="/images/institute/competition/IMG_2128.jpg" alt="Coach arrodillado acompañando a una competidora sentada durante el torneo" width="1365" height="2048" loading="lazy" decoding="async" />
+          </div>
+        </div>
       </InstituteSection>
 
       <InstituteSection index={6}>

@@ -1,9 +1,147 @@
+import { useLayoutEffect, useRef } from 'react'
 import '../styles/programas.css'
 
 export default function ProgramasPage() {
+  const pageRef = useRef(null)
+
+  useLayoutEffect(() => {
+    const page = pageRef.current
+    const motion = window.matchMedia('(prefers-reduced-motion: reduce)')
+    if (motion.matches || !('IntersectionObserver' in window)) return
+
+    // Observe reading units individually, including both formation blocks.
+    const elements = [...page.querySelectorAll(
+      '.programas__number, .programas__eyebrow, .programas__heading h1, .programas__heading h2, .programas__body > p, .programas__path, .programas__cta',
+    )]
+    let stopped = false
+    let secondFrame
+    const reveal = (element, delay = 0) => {
+      element.style.setProperty('--programas-reveal-delay', delay + 'ms')
+      element.classList.add('programas-reveal--visible')
+      observer.unobserve(element)
+    }
+    const observer = new IntersectionObserver((entries) => {
+      entries.filter((entry) => entry.isIntersecting)
+        .sort((a, b) => elements.indexOf(a.target) - elements.indexOf(b.target))
+        .forEach(({ target }, index) => {
+          const mobile = window.matchMedia('(max-width: 700px)').matches
+          const step = target.matches('.programas__path') ? 120 : 65
+          const startedAt = page.querySelector('.programas__emblem')?.dataset.revealStartedAt
+          const lead = startedAt && target.closest('.programas__chapter--opening')
+            ? Math.max(0, 350 - (performance.now() - Number(startedAt))) : 0
+          reveal(target, lead + (mobile ? Math.min(index, 2) * 40 : Math.min(index, 4) * step))
+        })
+    }, { threshold: 0, rootMargin: '0px 0px -24px 0px' })
+
+    elements.forEach((element) => {
+      element.classList.add('programas-reveal')
+      // Keep content above a restored scroll position visible.
+      if (element.getBoundingClientRect().bottom <= 0) reveal(element)
+    })
+    // Establish the initial state before observing the opening chapter.
+    const firstFrame = requestAnimationFrame(() => {
+      secondFrame = requestAnimationFrame(() => {
+        if (!stopped) elements.forEach((element) => {
+          if (!element.classList.contains('programas-reveal--visible')) observer.observe(element)
+        })
+      })
+    })
+    const showAll = () => {
+      stopped = true
+      observer.disconnect()
+      elements.forEach((element) => reveal(element))
+    }
+    const onMotionChange = () => { if (motion.matches) showAll() }
+    const onFocus = (event) => {
+      const element = event.target.closest('.programas-reveal')
+      if (element) reveal(element)
+    }
+    motion.addEventListener('change', onMotionChange)
+    page.addEventListener('focusin', onFocus)
+    window.addEventListener('beforeprint', showAll)
+    return () => {
+      stopped = true
+      cancelAnimationFrame(firstFrame)
+      cancelAnimationFrame(secondFrame)
+      observer.disconnect()
+      motion.removeEventListener('change', onMotionChange)
+      page.removeEventListener('focusin', onFocus)
+      window.removeEventListener('beforeprint', showAll)
+      elements.forEach((element) => {
+        element.classList.remove('programas-reveal', 'programas-reveal--visible')
+        element.style.removeProperty('--programas-reveal-delay')
+      })
+    }
+  }, [])
+
+
+  useLayoutEffect(() => {
+    const emblem = pageRef.current.querySelector('.programas__emblem')
+    const motion = window.matchMedia('(prefers-reduced-motion: reduce)')
+    if (motion.matches || !('IntersectionObserver' in window)) return
+
+    let observer
+    let activated = false
+    const finish = (animate) => {
+      if (activated) return
+      activated = true
+      observer?.disconnect()
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', observe)
+      if (!animate) emblem.classList.add('programas-emblem--settled')
+      else emblem.dataset.revealStartedAt = String(performance.now())
+      emblem.classList.add('programas-reveal--visible')
+    }
+    // A fast jump past the entire zone must not leave a hidden emblem behind.
+    const onScroll = () => {
+      if (emblem.getBoundingClientRect().bottom <= 0) finish(false)
+    }
+    const observe = () => {
+      if (activated) return
+      observer?.disconnect()
+      const rect = emblem.getBoundingClientRect()
+      const bottomInset = Math.round(window.innerHeight * .12)
+      // Account for transparent mobile overflow and short landscape viewports.
+      const visibleWidth = Math.max(0, Math.min(rect.right, document.documentElement.clientWidth) - Math.max(rect.left, 0))
+      const attainableRatio = (visibleWidth / rect.width)
+        * Math.min(1, (window.innerHeight - bottomInset) / rect.height)
+      const threshold = Math.min(.45, attainableRatio * .65)
+      observer = new IntersectionObserver((entries) => {
+        if (entries.some((entry) => entry.isIntersecting && entry.intersectionRatio >= threshold)) finish(true)
+      }, { threshold, rootMargin: '0px 0px -' + bottomInset + 'px 0px' })
+      observer.observe(emblem)
+      onScroll()
+    }
+    emblem.classList.add('programas-reveal')
+    observe()
+    if (!activated) {
+      window.addEventListener('scroll', onScroll, { passive: true })
+      window.addEventListener('resize', observe)
+    }
+    const showImmediately = () => {
+      emblem.classList.add('programas-emblem--settled')
+      finish(false)
+    }
+    const onMotionChange = () => { if (motion.matches) showImmediately() }
+    motion.addEventListener('change', onMotionChange)
+    window.addEventListener('beforeprint', showImmediately)
+    return () => {
+      observer?.disconnect()
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', observe)
+      motion.removeEventListener('change', onMotionChange)
+      window.removeEventListener('beforeprint', showImmediately)
+      emblem.classList.remove('programas-reveal', 'programas-reveal--visible', 'programas-emblem--settled')
+      delete emblem.dataset.revealStartedAt
+    }
+  }, [])
+
   return (
-    <main className="programas" id="programas-contenido">
+    <main ref={pageRef} className="programas" id="programas-contenido">
       <section className="programas__chapter programas__chapter--opening" aria-labelledby="programas-title">
+        <div className="programas__emblem" aria-hidden="true">
+          <img className="programas__emblem-image" src="/images/programas/branding/hti-institute-emblem.png" width="3508" height="2481" alt="" decoding="async" />
+        </div>
         <span className="programas__number" aria-hidden="true">00</span>
         <header className="programas__heading">
           <p className="programas__eyebrow">PROGRAMAS</p>

@@ -217,3 +217,271 @@
 @media (prefers-reduced-motion: reduce) {
   .programas .programas__cta { transition: none; }
 }
+
+/* Progressive enhancement: content stays visible without an active observer. */
+.programas .programas-reveal {
+  --programas-reveal-distance: 18px;
+  --programas-reveal-duration: 720ms;
+  opacity: 0;
+  transform: translateY(var(--programas-reveal-distance));
+  transition: opacity var(--programas-reveal-duration) cubic-bezier(.22, 1, .36, 1) var(--programas-reveal-delay, 0ms),
+    transform var(--programas-reveal-duration) cubic-bezier(.22, 1, .36, 1) var(--programas-reveal-delay, 0ms),
+    background-color .2s, border-color .2s;
+}
+
+.programas .programas__chapter--fuerza h2.programas-reveal {
+  --programas-reveal-distance: 24px;
+}
+
+.programas .programas__chapter--closing .programas-reveal {
+  --programas-reveal-duration: 800ms;
+}
+
+.programas .programas__closing-pause.programas-reveal {
+  --programas-reveal-duration: 900ms;
+}
+
+.programas .programas-reveal--visible {
+  opacity: 1;
+  transform: none;
+}
+
+.programas .programas-reveal:focus-visible {
+  opacity: 1;
+  transform: none;
+  transition: background-color .2s, border-color .2s;
+}
+
+@media (max-width: 700px) {
+  .programas .programas-reveal {
+    --programas-reveal-distance: 12px;
+    --programas-reveal-duration: 600ms;
+  }
+  .programas .programas__chapter--fuerza h2.programas-reveal {
+    --programas-reveal-distance: 16px;
+  }
+  .programas .programas__chapter--closing .programas-reveal {
+    --programas-reveal-duration: 650ms;
+  }
+  .programas .programas__closing-pause.programas-reveal {
+    --programas-reveal-duration: 750ms;
+  }
+}
+
+@media (prefers-reduced-motion: reduce), print {
+  .programas .programas-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    transition-delay: 0s;
+  }
+}
+
+
+/* Opening seal: use the existing left column without narrowing the title. */
+.programas .programas__chapter--opening {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+}
+
+.programas .programas__emblem {
+  display: block;
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: end;
+  align-self: start;
+  width: min(100%, 22rem);
+  height: auto;
+  margin-bottom: 1.5rem;
+}
+
+.programas .programas__chapter--opening > .programas__number {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: end;
+}
+
+.programas .programas__chapter--opening > .programas__heading,
+.programas .programas__chapter--opening > .programas__body {
+  grid-column: 1 / -1;
+}
+
+/* Contain the enlarged entrance at the page edge without a scroll container. */
+.programas {
+  overflow-x: clip;
+}
+
+
+.programas .programas__emblem {
+  position: relative;
+  aspect-ratio: 3508 / 2481;
+}
+
+.programas .programas__emblem-image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Keep the observed box stable; only the PNG fades and scales. */
+.programas .programas__emblem.programas-reveal {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+.programas .programas__emblem.programas-reveal .programas__emblem-image {
+  opacity: 0;
+}
+
+.programas .programas__emblem.programas-reveal--visible .programas__emblem-image {
+  animation: programas-emblem-enter 650ms cubic-bezier(.22, 1, .36, 1) both;
+}
+
+@keyframes programas-emblem-enter {
+  from { opacity: 0; transform: scale(.96); }
+  to { opacity: 1; transform: none; }
+}
+
+/* PNG circle: 2364px diameter, center (1753.5, 1239.5).
+   Orbit: 108% of that diameter = 72.78% of the 3508px canvas width. */
+@supports (background: conic-gradient(red, transparent)) and (mask-image: radial-gradient(black, transparent)) {
+  .programas .programas__emblem::before {
+    content: '';
+    position: absolute;
+    pointer-events: none;
+    left: 49.986%;
+    top: 49.96%;
+    width: 72.78%;
+    aspect-ratio: 1;
+    --programas-orbit-stroke: 2.5px;
+    border-radius: 50%;
+    background: conic-gradient(
+      from 0deg,
+      transparent 0deg 304deg,
+      color-mix(in srgb, var(--hti-red-active) 0%, transparent) 304deg,
+      color-mix(in srgb, var(--hti-red-active) 35%, transparent) 324deg,
+      var(--hti-red-active) 350deg,
+      #ff2938 356deg 359deg,
+      transparent 360deg
+    );
+    mask-image: radial-gradient(closest-side,
+      transparent calc(100% - var(--programas-orbit-stroke)),
+      #000 calc(100% - var(--programas-orbit-stroke) + .5px),
+      #000 calc(100% - .5px), transparent 100%);
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  .programas .programas__emblem.programas-reveal--visible::before {
+    animation: programas-orbit-on 250ms ease-out 300ms both,
+      programas-orbit-turn 4.2s linear 300ms infinite;
+  }
+}
+
+@keyframes programas-orbit-on {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes programas-orbit-turn {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.programas .programas__emblem.programas-emblem--settled .programas__emblem-image {
+  opacity: 1;
+  transform: none;
+  animation: none;
+}
+
+.programas .programas__emblem.programas-emblem--settled::before {
+  opacity: 0;
+  animation: none;
+}
+
+@media (max-width: 700px) {
+  .programas .programas__emblem::before {
+    --programas-orbit-stroke: 2px;
+  }
+}
+
+@media (min-width: 1110px) {
+  .programas .programas__chapter--opening {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+  }
+
+  .programas .programas__chapter--opening > .programas__number {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+  .programas .programas__chapter--opening > .programas__heading {
+    grid-row: 2;
+  }
+
+  .programas .programas__emblem {
+    grid-column: 1;
+    grid-row: 3;
+    justify-self: start;
+    /* Borrow only the outer margin and gutter; keep the reading column intact. */
+    --programas-emblem-bleed: clamp(0px, calc((100vw - min(88vw, 1400px)) / 2 - 1rem), 18rem);
+    width: calc(100% + var(--programas-emblem-bleed) + clamp(3rem, 5vw, 6rem) - 1.5rem);
+    max-width: none;
+    margin-left: calc(-1 * var(--programas-emblem-bleed));
+    margin-bottom: 0;
+  }
+
+  .programas .programas__chapter--opening > .programas__body {
+    grid-column: 2;
+    grid-row: 3;
+  }
+}
+
+@media (min-width: 1110px) and (max-width: 1600px) {
+  .programas .programas__emblem {
+    margin-top: 24px;
+  }
+}
+
+@media (min-width: 1601px) {
+  .programas .programas__emblem {
+    --programas-emblem-bleed: clamp(3rem, 5vw, 6rem);
+    max-width: 660px;
+  }
+}
+
+@media (max-width: 700px) {
+  .programas .programas__emblem {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    justify-self: center;
+    width: 132vw;
+    max-width: 132vw;
+    margin-block: .75rem 2.5rem;
+  }
+
+  .programas .programas__chapter--opening > .programas__number {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+
+}
+
+/* Reduced motion and print show the original PNG without the scanner. */
+@media (prefers-reduced-motion: reduce), print {
+  .programas .programas__emblem.programas-reveal,
+  .programas .programas__emblem.programas-reveal .programas__emblem-image {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    animation: none;
+    transition: none;
+  }
+
+  .programas .programas__emblem::before {
+    display: none;
+    animation: none;
+  }
+}

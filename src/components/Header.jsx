@@ -7,7 +7,7 @@ const links = [
   ['Contacto', '/#contacto'],
 ]
 
-export default function Header() {
+export default function Header({ onContactNavigate }) {
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
@@ -26,7 +26,10 @@ export default function Header() {
         <i /><i />
       </button>
       <nav id="main-nav" className={open ? 'nav nav--open' : 'nav'} aria-label="Navegación principal">
-        {links.map(([label, href]) => <a key={href} href={href} onClick={() => setOpen(false)}>{label}</a>)}
+        {links.map(([label, href]) => <a key={href} href={href} onClick={(event) => {
+          setOpen(false)
+          if (href === '/#contacto') onContactNavigate(event)
+        }}>{label}</a>)}
       </nav>
     </header>
   )

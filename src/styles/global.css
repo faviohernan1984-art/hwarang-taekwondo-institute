@@ -35,17 +35,8 @@ main { position: relative; isolation: isolate; background: var(--hti-black); }
 .hero h1,
 .institute h2,
 .contact h2 {
-  background-color: var(--hti-white);
-  background-image:
-    radial-gradient(ellipse 88% 135% at 16% 14%, rgba(255,255,255,.58), transparent 56%),
-    radial-gradient(ellipse 78% 125% at 82% 76%, rgba(184,184,184,.32), transparent 62%),
-    linear-gradient(164deg, #fff 0%, var(--hti-white) 28%, #d1d1ce 58%, #f7f6f2 78%, #dededa 100%);
-  background-size: 165% 185%, 185% 165%, 100% 100%;
-  background-position: 5% 10%, 94% 88%, center;
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
+  color: var(--hti-white);
+  -webkit-text-fill-color: var(--hti-white);
   text-shadow: 0 1px 1px rgba(0,0,0,.42), 0 4px 12px rgba(0,0,0,.2);
 }
 

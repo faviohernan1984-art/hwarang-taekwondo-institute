@@ -121,7 +121,7 @@ export default function App() {
 
   return (
     <div className="site">
-      <Header onContactNavigate={navigateToContact} />
+      <Header pathname={path} hash={navigation.hash} onContactNavigate={navigateToContact} />
       {path === '/institute' ? <InstitutePage /> : path === '/sedes' ? <SedesPage /> : path === '/evolucion' ? <EvolutionPage /> : path === '/programas' ? <ProgramasPage /> : constructionPaths.has(path) ? <ConstructionPage /> : <main>
         <div className="home-photo">
           <img src="/images/hti-hero-original.jpg" alt="Alumnos de Hwarang practicando Taekwon-Do en el dojang" width="6000" height="4000" fetchPriority="high" />

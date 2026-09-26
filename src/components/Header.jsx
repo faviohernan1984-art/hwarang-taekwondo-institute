@@ -7,8 +7,9 @@ const links = [
   ['Contacto', '/#contacto'],
 ]
 
-export default function Header({ onContactNavigate }) {
+export default function Header({ pathname, hash, onContactNavigate }) {
   const [open, setOpen] = useState(false)
+  const activeHref = pathname === '/' && hash ? `/${hash}` : pathname
 
   useEffect(() => {
     const closeOnEscape = (event) => event.key === 'Escape' && setOpen(false)
@@ -26,7 +27,7 @@ export default function Header({ onContactNavigate }) {
         <i /><i />
       </button>
       <nav id="main-nav" className={open ? 'nav nav--open' : 'nav'} aria-label="Navegación principal">
-        {links.map(([label, href]) => <a key={href} href={href} onClick={(event) => {
+        {links.map(([label, href]) => <a key={href} href={href} aria-current={href === activeHref ? (href.includes('#') ? 'location' : 'page') : undefined} onClick={(event) => {
           setOpen(false)
           if (href === '/#contacto') onContactNavigate(event)
         }}>{label}</a>)}

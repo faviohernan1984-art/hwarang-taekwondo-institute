@@ -48,11 +48,9 @@ export default function GalleryPage() {
           <div className="hti-gallery__community-copy">
             <p>¿Vas a acompañarnos a un torneo, examen, seminario o exhibición?</p>
             <p>Tu mirada también puede formar parte de la historia de Hwarang.</p>
-            {/* Futuro recorrido: guía fotográfica → envío → recepción de material. */}
-            <button className="hti-gallery__guide" type="button" disabled aria-describedby="gallery-guide-note">
+            <a className="hti-gallery__guide" href="/galeria/guia">
               APRENDÉ A REGISTRAR UN MOMENTO HTI
-            </button>
-            <p className="hti-gallery__guide-note" id="gallery-guide-note">Próximamente, nuestra guía fotográfica.</p>
+            </a>
           </div>
         </section>
       </div>

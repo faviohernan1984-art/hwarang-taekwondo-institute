@@ -8,6 +8,7 @@ import SedesPage from './components/SedesPage.jsx'
 import InstitutePage from './components/InstitutePage.jsx'
 import ProgramasPage from './components/ProgramasPage.jsx'
 import GalleryPage from './components/GalleryPage.jsx'
+import GalleryGuidePage from './components/GalleryGuidePage.jsx'
 import { SEO_BY_ROUTE, SITE_URL } from './seo.js'
 
 const constructionPaths = new Set(['/historia'])
@@ -123,7 +124,7 @@ export default function App() {
   return (
     <div className="site">
       <Header pathname={path} hash={navigation.hash} onContactNavigate={navigateToContact} />
-      {path === '/institute' ? <InstitutePage /> : path === '/sedes' ? <SedesPage /> : path === '/evolucion' ? <EvolutionPage /> : path === '/programas' ? <ProgramasPage /> : path === '/galeria' ? <GalleryPage /> : constructionPaths.has(path) ? <ConstructionPage /> : <main>
+      {path === '/institute' ? <InstitutePage /> : path === '/sedes' ? <SedesPage /> : path === '/evolucion' ? <EvolutionPage /> : path === '/programas' ? <ProgramasPage /> : path === '/galeria' ? <GalleryPage /> : path === '/galeria/guia' ? <GalleryGuidePage /> : constructionPaths.has(path) ? <ConstructionPage /> : <main>
         <div className="home-photo">
           <img src="/images/hti-hero-original.jpg" alt="Alumnos de Hwarang practicando Taekwon-Do en el dojang" width="6000" height="4000" fetchPriority="high" />
         </div>

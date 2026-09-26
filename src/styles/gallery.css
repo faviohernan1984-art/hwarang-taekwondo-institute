@@ -102,6 +102,8 @@
   line-height: 1.85;
 }
 .hti-gallery .hti-gallery__guide {
+  display: inline-block;
+  text-decoration: none;
   max-width: 100%;
   min-height: 48px;
   margin-top: .5rem;
@@ -114,8 +116,9 @@
   letter-spacing: .08em;
   text-align: left;
   opacity: 1;
-  cursor: default;
+  cursor: pointer;
 }
+.hti-gallery .hti-gallery__guide:focus-visible { outline: 2px solid var(--hti-red-active); outline-offset: 5px; }
 .hti-gallery .hti-gallery__community-copy > .hti-gallery__guide-note {
   margin: .75rem 0 0;
   font-size: .72rem;

@@ -74,16 +74,14 @@
   align-items: start;
   gap: 1rem;
 }
-.hti-gallery .hti-gallery__placeholder {
+.hti-gallery .hti-gallery__photo {
+  display: block;
+  width: 100%;
+  height: auto;
   min-width: 0;
   background: var(--hti-charcoal);
   border: 1px solid var(--hti-dark-gray);
 }
-/* Proporciones de prueba exclusivas de los placeholders temporales. */
-.hti-gallery .hti-gallery__placeholder--wide { grid-column: span 2; aspect-ratio: 2 / 1; }
-.hti-gallery .hti-gallery__placeholder--vertical { aspect-ratio: 3 / 4; background: #111; }
-.hti-gallery .hti-gallery__placeholder--square { aspect-ratio: 1; background: #151515; }
-.hti-gallery .hti-gallery__placeholder--horizontal { aspect-ratio: 4 / 3; }
 .hti-gallery .hti-gallery__community {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -143,6 +141,122 @@
   .hti-gallery .hti-gallery__filters { gap: .25rem 1rem; }
   .hti-gallery .hti-gallery__filter { font-size: .6rem; letter-spacing: .06em; }
   .hti-gallery .hti-gallery__grid { grid-template-columns: 1fr; grid-auto-rows: auto; }
-  .hti-gallery .hti-gallery__placeholder { grid-column: auto; aspect-ratio: 4 / 3; }
   .hti-gallery .hti-gallery__community { grid-template-columns: 1fr; gap: 1.5rem; margin-top: 3rem; padding-top: 2rem; }
+}
+
+
+.hti-gallery .hti-gallery__collections { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 2rem; }
+.hti-gallery .hti-gallery__collection-card { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: center; gap: 2rem; padding-block: 1rem; color: inherit; text-decoration: none; border-bottom: 1px solid var(--hti-dark-gray); }
+.hti-gallery .hti-gallery__collection-card h2 { font-size: clamp(1.7rem, 3vw, 2.6rem); }
+.hti-gallery .hti-gallery__collection-card p { line-height: 1.8; }
+.hti-gallery .hti-gallery__collection-card span { display: inline-block; margin-top: 1rem; color: var(--hti-white); font-size: .75rem; }
+.hti-gallery .hti-gallery__back { display: inline-flex; align-items: center; min-height: 44px; margin-bottom: 1.5rem; color: var(--hti-white); font-size: .7rem; text-decoration: none; }
+.hti-gallery .hti-gallery__collection-opening { margin-bottom: 2.5rem; }
+.hti-gallery .hti-gallery__collection-description { max-width: 75ch; color: var(--hti-light-gray); line-height: 1.8; }
+.hti-gallery .hti-gallery__photo-button { display: block; width: 100%; min-width: 0; padding: 0; border: 0; background: transparent; cursor: zoom-in; }
+.hti-gallery .hti-gallery__photo-button:focus-visible,
+.hti-gallery .hti-gallery__collection-card:focus-visible,
+.hti-gallery .hti-gallery__back:focus-visible { outline: 2px solid var(--hti-red-active); outline-offset: 5px; }
+
+.hti-lightbox { box-sizing: border-box; width: min(1400px, calc(100vw - 2rem)); height: calc(100vh - 2rem); height: calc(100dvh - 2rem); max-width: none; max-height: none; padding: 1rem; margin: auto; border: 1px solid #333; background: #101010; color: #f2f0eb; font-family: 'Montserrat', Arial, sans-serif; overflow: auto; }
+.hti-lightbox[open] { display: grid; grid-template-rows: auto minmax(100px, 1fr) auto auto; gap: .6rem; }
+.hti-lightbox::backdrop { background: rgba(0, 0, 0, .94); }
+.hti-lightbox .hti-lightbox__header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.hti-lightbox .hti-lightbox__header h2 { margin: 0; max-width: none; font: 400 clamp(.85rem, 1.5vw, 1.15rem)/1.4 'Montserrat', Arial, sans-serif; }
+.hti-lightbox button, .hti-lightbox .hti-lightbox__actions a { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: .6rem .9rem; border: 1px solid #555; background: transparent; color: #f2f0eb; font: 500 .7rem/1.4 'Montserrat', Arial, sans-serif; text-decoration: none; cursor: pointer; }
+.hti-lightbox button:disabled { opacity: .6; cursor: wait; }
+.hti-lightbox :focus-visible { outline: 2px solid #e02629; outline-offset: 3px; }
+.hti-lightbox .hti-lightbox__image { min-width: 0; min-height: 0; display: flex; justify-content: center; align-items: center; touch-action: pan-y pinch-zoom; }
+.hti-lightbox .hti-lightbox__image img { display: block; width: 100%; height: 100%; min-height: 0; object-fit: contain; user-select: none; }
+.hti-lightbox .hti-lightbox__navigation { display: flex; justify-content: center; align-items: center; gap: 1rem; }
+.hti-lightbox .hti-lightbox__navigation span { min-width: 5ch; text-align: center; font-size: .75rem; }
+.hti-lightbox .hti-lightbox__details { max-height: 30vh; max-height: 30dvh; overflow: auto; padding: .25rem; }
+.hti-lightbox .hti-lightbox__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: .75rem; }
+.hti-lightbox .hti-lightbox__status { margin: .25rem 0; text-align: center; font-size: .75rem; }
+.hti-lightbox .hti-lightbox__status:empty { margin: 0; }
+.hti-lightbox .hti-lightbox__advice { margin-top: .6rem; font-size: .75rem; line-height: 1.5; }
+.hti-lightbox .hti-lightbox__advice summary { cursor: pointer; min-height: 30px; padding-block: .25rem; }
+.hti-lightbox .hti-lightbox__advice p { margin: .2rem 0; }
+.hti-lightbox .hti-lightbox__copy { display: block; font-size: .75rem; margin-block: .5rem; }
+.hti-lightbox .hti-lightbox__copy input { box-sizing: border-box; width: 100%; margin-top: .4rem; padding: .75rem; color: #f2f0eb; background: #202020; border: 1px solid #555; }
+@media (max-width: 700px) {
+  .hti-gallery .hti-gallery__collection-card { grid-template-columns: 1fr; gap: 1rem; }
+  .hti-lightbox { width: 100%; height: 100vh; height: 100dvh; padding: .75rem; border: 0; }
+  .hti-lightbox .hti-lightbox__header { gap: .5rem; }
+  .hti-lightbox .hti-lightbox__header button { flex-shrink: 0; }
+  .hti-lightbox .hti-lightbox__navigation { gap: .5rem; }
+  .hti-lightbox .hti-lightbox__navigation button { flex: 1; }
+}
+
+/* Ambientación exclusiva del visor: pared mate y suelo pulido sin texturas. */
+.hti-lightbox .hti-lightbox__image {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(.4rem, 1.2vh, .9rem);
+  background:
+    radial-gradient(ellipse at 50% 18%, rgba(79, 79, 79, .13), transparent 68%),
+    linear-gradient(110deg, #090909, #141414 48%, #0b0b0b);
+}
+.hti-lightbox .hti-lightbox__image::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 65% 0 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 50% 88%, rgba(117, 117, 117, .10), transparent 66%),
+    linear-gradient(to bottom, transparent, rgba(3, 3, 3, .42) 28%, rgba(22, 22, 22, .6) 72%, rgba(7, 7, 7, .8));
+}
+.hti-lightbox .hti-lightbox__image::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  width: 62%;
+  height: 8%;
+  left: 19%;
+  bottom: 1%;
+  pointer-events: none;
+  background: radial-gradient(ellipse, rgba(0, 0, 0, .32), transparent 72%);
+}
+.hti-lightbox .hti-lightbox__image img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  flex: 0 1 auto;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, .25);
+}
+@media (max-width: 700px) {
+  .hti-lightbox .hti-lightbox__image { padding: .25rem; background: linear-gradient(#111, #090909); }
+  .hti-lightbox .hti-lightbox__image::before { inset: 78% 0 0; opacity: .5; }
+  .hti-lightbox .hti-lightbox__image::after { display: none; }
+}
+
+/* Refinamiento 02-E: ficha y distribución fuera del plano fotográfico. */
+.hti-gallery .hti-gallery__filter { cursor: pointer; }
+.hti-gallery .hti-gallery__filter:focus-visible { outline: 2px solid var(--hti-red-active); outline-offset: 4px; }
+.hti-lightbox .hti-lightbox__details { max-height: 36vh; max-height: 36dvh; }
+.hti-lightbox .hti-lightbox__facts { display: flex; flex-wrap: wrap; gap: .5rem 2rem; margin: .4rem 0 .7rem; }
+.hti-lightbox .hti-lightbox__facts div { display: flex; flex-wrap: wrap; gap: .4rem; }
+.hti-lightbox .hti-lightbox__facts dt { color: #b7b5b1; }
+.hti-lightbox .hti-lightbox__facts dt::after { content: ':'; }
+.hti-lightbox .hti-lightbox__facts dd { margin: 0; }
+.hti-lightbox .hti-lightbox__distribution { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .5rem; margin: .75rem auto; max-width: 800px; }
+.hti-lightbox .hti-lightbox__distribution a { display: inline-flex; justify-content: center; align-items: center; min-height: 44px; padding: .6rem .9rem; border: 1px solid #555; color: #f2f0eb; font-size: .7rem; text-decoration: none; }
+.hti-lightbox .hti-lightbox__distribution a, .hti-lightbox .hti-lightbox__distribution button, .hti-lightbox .hti-lightbox__actions a { gap: .5rem; }
+.hti-lightbox .hti-lightbox__distribution svg { flex-shrink: 0; }
+.hti-lightbox .hti-lightbox__distribution p { grid-column: 1 / -1; margin: .1rem 0; font-size: .75rem; line-height: 1.6; }
+.hti-lightbox .hti-lightbox__image {
+  background: radial-gradient(ellipse at 50% 24%, rgba(110, 110, 110, .18), transparent 65%), linear-gradient(105deg, #0a0a0a, #202020 48%, #0c0c0c);
+}
+.hti-lightbox .hti-lightbox__image::before {
+  inset: 58% 0 0;
+  background: radial-gradient(ellipse at 50% 92%, rgba(170, 170, 170, .20), transparent 72%), linear-gradient(to bottom, transparent 0%, rgba(2, 2, 2, .60) 20%, rgba(51, 51, 51, .65) 65%, rgba(14, 14, 14, .85));
+}
+@media (max-width: 700px) {
+  .hti-lightbox .hti-lightbox__distribution { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hti-lightbox .hti-lightbox__facts { gap: .35rem 1rem; }
+  .hti-lightbox .hti-lightbox__image { background: linear-gradient(#1b1b1b, #0c0c0c); }
+  .hti-lightbox .hti-lightbox__image::before { inset: 70% 0 0; opacity: .65; }
 }

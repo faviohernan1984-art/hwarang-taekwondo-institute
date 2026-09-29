@@ -14,7 +14,7 @@ function ActionIcon({ kind }) {
   return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={paths[kind]} /></svg>
 }
 
-export function PhotoActions({ photo, title }) {
+export function PhotoActions({ photo, title, layout = 'mobile' }) {
   const [file, setFile] = useState(null)
   const [status, setStatus] = useState('')
   const [manualLink, setManualLink] = useState(false)
@@ -80,7 +80,39 @@ export function PhotoActions({ photo, title }) {
       {manualLink && <label className="hti-lightbox__copy">Enlace de la fotografía
         <input readOnly value={url} onFocus={event => event.target.select()} onClick={event => event.currentTarget.select()} />
       </label>}
-      <details className="hti-lightbox__advice" open>
+      {layout === 'desktop' ? <>
+        <aside className="hti-lightbox__technical" aria-label="Información de la fotografía">
+        <dl className="hti-lightbox__facts">
+          <div><dt>Orientación</dt><dd>{advice.orientation}</dd></div>
+          <div><dt>Dimensiones</dt><dd>{photo.width} × {photo.height} px</dd></div>
+          <div><dt>Proporción</dt><dd>{advice.ratio}</dd></div>
+        </dl>
+        </aside>
+        <aside className="hti-lightbox__recommendations" aria-labelledby="hti-advice-title">
+          <h3 id="hti-advice-title">¿DÓNDE QUEDA MEJOR ESTA FOTO?</h3>
+        <p><strong>Recomendado:</strong> {advice.recommended}</p>
+        <p><strong>Instagram:</strong> {advice.instagram}</p>
+        <p><strong>Stories:</strong> {advice.stories}</p>
+        </aside>
+      </> : layout === 'notebook' ? <>
+        <aside className="hti-lightbox__technical" aria-label="Información de la fotografía">
+        <dl className="hti-lightbox__facts">
+          <div><dt>Orientación</dt><dd>{advice.orientation}</dd></div>
+          <div><dt>Dimensiones</dt><dd>{photo.width} × {photo.height} px</dd></div>
+          <div><dt>Proporción</dt><dd>{advice.ratio}</dd></div>
+        </dl>
+        </aside>
+        <aside className="hti-lightbox__recommendations hti-lightbox__notebook-panel" aria-labelledby="hti-notebook-advice-title">
+          <h3 id="hti-notebook-advice-title">¿DÓNDE QUEDA MEJOR ESTA FOTO?</h3>
+          <details className="hti-lightbox__notebook-advice">
+            <summary><span className="hti-lightbox__expand-label">MOSTRAR RECOMENDACIONES</span><span className="hti-lightbox__collapse-label">CONTRAER RECOMENDACIONES</span></summary>
+        <p><strong>Recomendado:</strong> {advice.recommended}</p>
+        <p><strong>Instagram:</strong> {advice.instagram}</p>
+        <p><strong>Stories:</strong> {advice.stories}</p>
+          </details>
+        </aside>
+      </> : (
+      <details className="hti-lightbox__advice" open={layout !== 'notebook'}>
         <summary>¿DÓNDE QUEDA MEJOR ESTA FOTO?</summary>
         <dl className="hti-lightbox__facts">
           <div><dt>Orientación</dt><dd>{advice.orientation}</dd></div>
@@ -91,12 +123,29 @@ export function PhotoActions({ photo, title }) {
         <p><strong>Instagram:</strong> {advice.instagram}</p>
         <p><strong>Stories:</strong> {advice.stories}</p>
       </details>
+      )}
     </div>
   )
 }
 
 export default function GalleryLightbox({ photos, initialIndex, title, onClose }) {
   const [index, setIndex] = useState(initialIndex)
+  const [layout, setLayout] = useState(() => {
+    if (!window.matchMedia('(min-width: 701px)').matches) return 'mobile'
+    return window.matchMedia('(max-height: 800px), (max-width: 1109px)').matches ? 'notebook' : 'desktop'
+  })
+
+  useEffect(() => {
+    const nonMobile = window.matchMedia('(min-width: 701px)')
+    const compact = window.matchMedia('(max-height: 800px), (max-width: 1109px)')
+    const update = () => setLayout(!nonMobile.matches ? 'mobile' : compact.matches ? 'notebook' : 'desktop')
+    nonMobile.addEventListener('change', update)
+    compact.addEventListener('change', update)
+    return () => {
+      nonMobile.removeEventListener('change', update)
+      compact.removeEventListener('change', update)
+    }
+  }, [])
   const dialog = useRef(null)
   const gesture = useRef(null)
   const photo = photos[index]
@@ -116,7 +165,7 @@ export default function GalleryLightbox({ photos, initialIndex, title, onClose }
   }, [])
 
   return (
-    <dialog ref={dialog} className="hti-lightbox" aria-labelledby="hti-lightbox-title"
+    <dialog ref={dialog} className="hti-lightbox" data-layout={layout} aria-labelledby="hti-lightbox-title"
       onCancel={event => { event.preventDefault(); onClose() }}
       onKeyDown={event => {
         if (event.target instanceof HTMLInputElement) return
@@ -148,7 +197,7 @@ export default function GalleryLightbox({ photos, initialIndex, title, onClose }
         <span aria-live="polite" aria-atomic="true">{index + 1} / {photos.length}</span>
         <button type="button" onClick={() => move(1)} aria-label="Fotografía siguiente">SIGUIENTE →</button>
       </nav>
-      <PhotoActions key={photo.id} photo={photo} title={title} />
+      <PhotoActions key={photo.id} photo={photo} title={title} layout={layout} />
     </dialog>
   )
 }

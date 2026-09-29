@@ -260,3 +260,47 @@
   .hti-lightbox .hti-lightbox__image { background: linear-gradient(#1b1b1b, #0c0c0c); }
   .hti-lightbox .hti-lightbox__image::before { inset: 70% 0 0; opacity: .65; }
 }
+
+/* 02-G: distribución exclusiva para pantallas de más de 700px. */
+@media (min-width: 701px) {
+  .hti-lightbox { width: calc(100vw - 1.5rem); padding: .6rem; }
+  .hti-lightbox[open] {
+    grid-template-columns: minmax(0, .22fr) auto minmax(0, 1fr) auto minmax(0, .3fr);
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    gap: .5rem;
+  }
+  .hti-lightbox .hti-lightbox__header { grid-column: 1 / -1; grid-row: 1; min-width: 0; }
+  .hti-lightbox .hti-lightbox__header h2 { font-size: .85rem; line-height: 1.25; overflow-wrap: anywhere; }
+  .hti-lightbox .hti-lightbox__header button { flex-shrink: 0; }
+  .hti-lightbox .hti-lightbox__image { grid-column: 3; grid-row: 2; }
+  .hti-lightbox .hti-lightbox__navigation,
+  .hti-lightbox .hti-lightbox__details { display: contents; }
+  .hti-lightbox .hti-lightbox__navigation button { grid-row: 2; align-self: center; min-width: 0; padding-inline: .5rem; }
+  .hti-lightbox .hti-lightbox__navigation button:first-child { grid-column: 2; }
+  .hti-lightbox .hti-lightbox__navigation button:last-child { grid-column: 4; }
+  .hti-lightbox .hti-lightbox__navigation span { grid-column: 2; grid-row: 3; align-self: center; }
+  .hti-lightbox .hti-lightbox__actions { grid-column: 3; grid-row: 3; gap: .5rem; }
+  .hti-lightbox .hti-lightbox__technical,
+  .hti-lightbox .hti-lightbox__recommendations { grid-row: 2; min-width: 0; min-height: 0; overflow: auto; padding: .5rem; font-size: .75rem; line-height: 1.6; overflow-wrap: anywhere; }
+  .hti-lightbox .hti-lightbox__technical { grid-column: 1; }
+  .hti-lightbox .hti-lightbox__recommendations { grid-column: 5; }
+  .hti-lightbox .hti-lightbox__recommendations h3 { margin: 0 0 .8rem; font: 500 .7rem/1.6 'Montserrat', Arial, sans-serif; }
+  .hti-lightbox .hti-lightbox__recommendations p { margin: 0 0 .8rem; }
+  .hti-lightbox .hti-lightbox__technical .hti-lightbox__facts { display: grid; gap: 1rem; margin: 0; }
+  .hti-lightbox .hti-lightbox__technical .hti-lightbox__facts div { display: block; }
+  .hti-lightbox .hti-lightbox__distribution { grid-column: 1 / -1; grid-row: 5; width: min(100%, 800px); max-height: 24dvh; overflow: auto; margin: 0 auto; padding: .25rem; box-sizing: border-box; }
+  .hti-lightbox .hti-lightbox__status { grid-column: 1 / -1; grid-row: 6; max-height: 10dvh; overflow: auto; }
+  .hti-lightbox .hti-lightbox__status:empty { display: none; }
+  .hti-lightbox .hti-lightbox__copy { grid-column: 1 / -1; grid-row: 7; margin: 0; }
+}
+
+/* Notebook y ventanas bajas: incluye 1536 × 703 y excluye mobile. */
+@media (min-width: 701px) and (max-height: 800px), (min-width: 701px) and (max-width: 1109px) {
+  .hti-lightbox[open] { grid-template-columns: minmax(0, .18fr) auto minmax(0, 1fr) auto minmax(0, .26fr); }
+  .hti-lightbox .hti-lightbox__notebook-panel { overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; scrollbar-gutter: stable; }
+  .hti-lightbox .hti-lightbox__notebook-advice { min-width: 0; }
+  .hti-lightbox .hti-lightbox__notebook-advice summary { cursor: pointer; min-height: 44px; padding-block: .5rem; font-size: .65rem; overflow-wrap: anywhere; }
+  .hti-lightbox .hti-lightbox__collapse-label { display: none; }
+  .hti-lightbox .hti-lightbox__notebook-advice[open] .hti-lightbox__collapse-label { display: inline; }
+  .hti-lightbox .hti-lightbox__notebook-advice[open] .hti-lightbox__expand-label { display: none; }
+}

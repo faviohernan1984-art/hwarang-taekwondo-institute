@@ -36,7 +36,7 @@ export default function GalleryPage() {
             ))}
           </div>
           <p className="hti-gallery__archive-note">Una colección de momentos compartidos en Hwarang.</p>
-          <p className="hti-gallery__archive-note" role="status">{visibleCollections.length ? `${visibleCollections.length} colección disponible` : 'Todavía no hay colecciones en esta categoría. Nuevos momentos de nuestra historia se sumarán al archivo.'}</p>
+          <p className="hti-gallery__archive-note" role="status">{visibleCollections.length ? `${visibleCollections.length} ${visibleCollections.length === 1 ? 'colección disponible' : 'colecciones disponibles'}` : 'Todavía no hay colecciones en esta categoría. Nuevos momentos de nuestra historia se sumarán al archivo.'}</p>
           <div className="hti-gallery__collections">
             {visibleCollections.map(collection => {
               const photos = getCollectionPhotos(collection.id)
@@ -45,7 +45,7 @@ export default function GalleryPage() {
                 <a className="hti-gallery__collection-card" key={collection.id} href={`/galeria/${collection.id}`}>
                   <img className="hti-gallery__photo" src={cover.src} alt={cover.alt} width={cover.width} height={cover.height} decoding="async" />
                   <div>
-                    <p className="hti-gallery__eyebrow">{galleryCategoryLabels[collection.category].toLocaleUpperCase('es')} · {photos.length} FOTOGRAFÍAS</p>
+                    <p className="hti-gallery__eyebrow">{galleryCategoryLabels[collection.category].toLocaleUpperCase('es')}{collection.locationLabel && ` · ${collection.locationLabel.toLocaleUpperCase('es')}`} · {photos.length} FOTOGRAFÍAS</p>
                     <h2>{collection.title.toLocaleUpperCase('es')}</h2>
                     <p>{collection.description}</p>
                     <span>VER COLECCIÓN →</span>

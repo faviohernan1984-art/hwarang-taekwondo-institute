@@ -11,7 +11,7 @@ export default function GalleryCollectionPage({ collection }) {
       <div className="hti-gallery__inner">
         <a className="hti-gallery__back" href="/galeria">← VOLVER A GALERÍA</a>
         <header className="hti-gallery__collection-opening">
-          <p className="hti-gallery__eyebrow">{galleryCategoryLabels[collection.category].toLocaleUpperCase('es')} · {photos.length} FOTOGRAFÍAS</p>
+          <p className="hti-gallery__eyebrow">{galleryCategoryLabels[collection.category].toLocaleUpperCase('es')}{collection.locationLabel && ` · ${collection.locationLabel.toLocaleUpperCase('es')}`} · {photos.length} FOTOGRAFÍAS</p>
           <h1>{collection.title}</h1>
           <p className="hti-gallery__collection-description">{collection.description}</p>
         </header>

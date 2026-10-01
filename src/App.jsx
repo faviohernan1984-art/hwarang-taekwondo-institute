@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import Header from './components/Header.jsx'
 import Hero from './components/Hero.jsx'
 import Contact from './components/Contact.jsx'
-import ConstructionPage from './components/ConstructionPage.jsx'
+import HistoryPage from './components/HistoryPage.jsx'
 import EvolutionPage from './components/EvolutionPage.jsx'
 import SedesPage from './components/SedesPage.jsx'
 import InstitutePage from './components/InstitutePage.jsx'
@@ -13,7 +13,7 @@ import { galleryCollections } from './data/galleryCollections.js'
 import GalleryGuidePage from './components/GalleryGuidePage.jsx'
 import { SEO_BY_ROUTE, SITE_URL } from './seo.js'
 
-const constructionPaths = new Set(['/historia'])
+
 
 export default function App() {
   const [navigation, setNavigation] = useState(() => ({
@@ -127,7 +127,7 @@ export default function App() {
   return (
     <div className="site">
       <Header pathname={path} hash={navigation.hash} onContactNavigate={navigateToContact} />
-      {path === '/institute' ? <InstitutePage /> : path === '/sedes' ? <SedesPage /> : path === '/evolucion' ? <EvolutionPage /> : path === '/programas' ? <ProgramasPage /> : galleryCollection ? <GalleryCollectionPage key={galleryCollection.id} collection={galleryCollection} /> : path === '/galeria' ? <GalleryPage /> : path === '/galeria/guia' ? <GalleryGuidePage /> : constructionPaths.has(path) ? <ConstructionPage /> : <main>
+      {path === '/institute' ? <InstitutePage /> : path === '/sedes' ? <SedesPage /> : path === '/evolucion' ? <EvolutionPage /> : path === '/programas' ? <ProgramasPage /> : galleryCollection ? <GalleryCollectionPage key={galleryCollection.id} collection={galleryCollection} /> : path === '/galeria' ? <GalleryPage /> : path === '/galeria/guia' ? <GalleryGuidePage /> : path === '/historia' ? <HistoryPage /> : <main>
         <div className="home-photo">
           <img src="/images/hti-hero-original.jpg" alt="Alumnos de Hwarang practicando Taekwon-Do en el dojang" width="6000" height="4000" fetchPriority="high" />
         </div>

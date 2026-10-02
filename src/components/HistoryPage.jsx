@@ -24,6 +24,50 @@ export default function HistoryPage() {
     return () => observer.disconnect()
   }, [])
 
+
+  useEffect(() => {
+    const page = root.current
+    const preference = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const selector = '.hti-history__year, .hti-history__entry-heading > *, .hti-history__copy, .hti-history__events, .hti-history__number, .hti-history__closing'
+    const targets = [...page.querySelectorAll(selector)]
+    let revealObserver
+    const reset = () => {
+      revealObserver?.disconnect()
+      targets.forEach(target => target.classList.remove('hti-history__motion', 'is-written'))
+      page.classList.remove('hti-history--motion')
+    }
+    const setup = () => {
+      reset()
+      if (preference.matches || !('IntersectionObserver' in window)) return
+      page.classList.add('hti-history--motion')
+      revealObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return
+          entry.target.classList.add('is-written')
+          revealObserver.unobserve(entry.target)
+        })
+      }, { rootMargin: '0px 0px -6% 0px', threshold: 0 })
+      targets.forEach(target => {
+        target.classList.add('hti-history__motion')
+        revealObserver.observe(target)
+      })
+    }
+    const revealFocus = event => {
+      event.target.closest('.hti-history__scene')?.querySelectorAll(selector).forEach(target => {
+        target.classList.add('is-written')
+        revealObserver?.unobserve(target)
+      })
+    }
+    setup()
+    preference.addEventListener('change', setup)
+    page.addEventListener('focusin', revealFocus)
+    return () => {
+      reset()
+      preference.removeEventListener('change', setup)
+      page.removeEventListener('focusin', revealFocus)
+    }
+  }, [])
+
   return (
     <main ref={root} className="hti-history" aria-labelledby="history-title">
       <section className="hti-history__opening" aria-labelledby="history-title">
@@ -51,7 +95,7 @@ export default function HistoryPage() {
               <p className="hti-history__place">Rafaela, octubre</p><h3 id="history-beginning">Aprender.</h3>
             </header>
             <div className="hti-history__copy">
-            <p>En octubre de 1998, Favio H. Albornoz comienza la práctica del Taekwon-Do en Rafaela, en el dojang del instructor mayor Víctor Lozano, en Sarmiento 160.</p>
+            <p>En octubre de 1998, Favio H. Albornoz comienza la práctica del <span className="hti-history__nowrap">Taekwon-Do</span> en Rafaela, en el dojang del instructor mayor Víctor Lozano, en Sarmiento 160.</p>
             <p>En enero de 1999 continúa su formación con Néstor Coria, I Dan, en la vecinal del barrio Güemes. Durante 2000, el entrenamiento se traslada a la vecinal del barrio Martín Fierro.</p>
             <p className="hti-history__aside">Antes de enseñar hubo que aprender.<br />Antes de dirigir hubo que permanecer.</p>
           </div>
@@ -94,7 +138,7 @@ export default function HistoryPage() {
               <h3 id="history-advance">Continuar la formación.</h3>
             </header>
             <div className="hti-history__copy">
-            <p>En noviembre de 2014 comienza la vinculación con el Centro Nacional de Taekwon-Do, dirigido por el maestro Guillermo Bianchi, VII Dan.</p>
+            <p>En noviembre de 2014 comienza la vinculación con el Centro Nacional de <span className="hti-history__nowrap">Taekwon-Do</span>, dirigido por el maestro Guillermo Bianchi, VII Dan.</p>
             <p>A partir de esta etapa continúa la progresión de graduaciones: 5.º Gup — julio de 2015; 4.º Gup — diciembre de 2015; 3.º Gup — julio de 2016; 2.º Gup — diciembre de 2016; 1.º Gup — mayo de 2017.</p>
           </div>
           </div>
@@ -192,7 +236,7 @@ export default function HistoryPage() {
               <p className="hti-history__label">2025 — Transformación técnica</p>
               <h3 id="history-present">Una nueva etapa<br />técnica.</h3>
             </header>
-            <div className="hti-history__copy"><p>Durante 2025 comienza una etapa de transformación técnica dentro del recorrido de Academia Hwa-Rang.</p><p>El vínculo actual con el maestro Sebastián Pinto, VII Dan, y el Círculo Cerrado de Competición forma parte de este presente.</p></div>
+            <div className="hti-history__copy"><p>Durante 2025 comienza una etapa de transformación técnica dentro del recorrido de Academia Hwa-Rang.</p><p>El vínculo actual con el <strong>MAESTRO SEBASTIÁN PINTO, VII DAN</strong>, y el <strong>CÍRCULO CERRADO DE COMPETICIÓN</strong> forma parte de este presente.</p></div>
           </div>
 
         </section>
@@ -201,18 +245,18 @@ export default function HistoryPage() {
           <p className="hti-history__year" aria-hidden="true">2026</p>
 <div className="hti-history__entry hti-history__entry--major hti-history__entry--institution" aria-labelledby="history-identity">
             <header className="hti-history__entry-heading">
-              <p className="hti-history__label"><time dateTime="2026-09-11">11.09.2026</time></p><p className="hti-history__institution-name">Hwarang Taekwon-Do Institute</p>
+              <p className="hti-history__label"><time dateTime="2026-09-11">11.09.2026</time></p><p className="hti-history__institution-name">Hwarang <span className="hti-history__nowrap">Taekwon-Do</span> Institute</p>
               <h3 id="history-identity">Una nueva identidad.<br />La misma historia.</h3>
             </header>
             <div className="hti-history__copy">
-            <p>El 11 de septiembre de 2026, Academia Hwa-Rang adopta oficialmente el nombre Hwarang Taekwon-Do Institute — HTI.</p>
+            <p>El 11 de septiembre de 2026, Academia Hwa-Rang adopta oficialmente el nombre Hwarang <span className="hti-history__nowrap">Taekwon-Do</span> Institute — HTI.</p>
             <p>La nueva identidad no comienza otra historia. Le da un nuevo nombre al camino iniciado años atrás.</p>
-            <p className="hti-history__aside hti-history__lineage"><span>Academia Hwa-Rang — <time dateTime="2019-04-09">09.04.2019</time></span><span className="hti-history__lineage-arrow" aria-hidden="true">↓</span><span>Hwarang Taekwon-Do Institute — <time dateTime="2026-09-11">11.09.2026</time></span></p>
+            <p className="hti-history__aside hti-history__lineage"><span>Academia Hwa-Rang — <time dateTime="2019-04-09">09.04.2019</time></span><span className="hti-history__lineage-arrow" aria-hidden="true">↓</span><span>Hwarang <span className="hti-history__nowrap">Taekwon-Do</span> Institute — <time dateTime="2026-09-11">11.09.2026</time></span></p>
             <p>La misma institución, una identidad que evoluciona.</p>
           </div>
           </div>
         <footer className="hti-history__closing">
-        <p className="hti-history__label">Hwarang Taekwon-Do Institute</p>
+        <p className="hti-history__label">Hwarang <span className="hti-history__nowrap">Taekwon-Do</span> Institute</p>
         <h2>La historia no termina<br />en el presente.</h2>
         <p>El presente es la parte que estamos escribiendo ahora.</p>
         <a className="hti-history__cta" href="/institute">Conocé el Instituto <span aria-hidden="true">↗</span></a>

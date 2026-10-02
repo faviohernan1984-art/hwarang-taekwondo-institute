@@ -158,7 +158,7 @@
   .hti-history__scene--2023 .hti-history__entry--legacy { display: flex; flex-direction: column; align-items: flex-start; gap: .5rem; }
   .hti-history__number span { font-size: 7rem; }
   .hti-history__events { display: flex; flex-direction: column; gap: 1rem; }
-  .hti-history__events li:nth-child(2) { margin-left: 12%; }
+  .hti-history__events li:nth-child(2) { margin-left: 0; }
   .hti-history__events h4 { font-size: 1.6rem; }
   .hti-history__events p { font-size: .8rem; }
   .hti-history__scene--2025 > .hti-history__entry--transition { display: block; }
@@ -244,4 +244,124 @@
   .hti-history__scene--2025 .hti-history__events p { margin-bottom: .4rem; }
   .hti-history__scene--2025 > .hti-history__entry--transition { grid-row: 3 !important; }
   .hti-history__scene--2025 > .hti-history__entry--transition .hti-history__copy { align-self: start; }
+}
+
+/* Position right-hand blocks without changing the left composition. */
+@media (min-width: 901px) and (min-height: 551px) {
+  .hti-history__scene--1998 > .hti-history__entry + .hti-history__entry,
+  .hti-history__scene--2017 > .hti-history__entry + .hti-history__entry,
+  .hti-history__scene--2019 > .hti-history__entry + .hti-history__entry {
+    align-self: end;
+  }
+  .hti-history__scene--1998 > .hti-history__entry + .hti-history__entry {
+    position: relative;
+    top: calc(-1 * clamp(2.5rem, 6dvh, 5rem));
+  }
+  .hti-history__scene--2019 > .hti-history__entry:first-of-type > .hti-history__copy { align-self: center; }
+  .hti-history__scene--2004 > .hti-history__entry:first-of-type > .hti-history__copy {
+    align-self: start;
+    position: relative;
+    top: clamp(1.5rem, 5dvh, 4rem);
+  }
+  .hti-history__scene--2014 > .hti-history__entry:first-of-type > .hti-history__entry-heading {
+    grid-row: 1 / 3;
+    align-self: center;
+    position: relative;
+    top: calc(-1 * clamp(1rem, 3dvh, 2rem));
+  }
+  .hti-history__scene--1998 > .hti-history__year,
+  .hti-history__scene--1998 > .hti-history__entry:first-of-type > .hti-history__entry-heading {
+    position: relative;
+    top: clamp(2rem, 8dvh, 5rem);
+  }
+  .hti-history__scene--2017 > .hti-history__entry:first-of-type > .hti-history__copy {
+    align-self: center;
+  }
+  .hti-history__scene--2023 > .hti-history__entry:first-of-type > .hti-history__copy,
+  .hti-history__scene--2026 > .hti-history__entry:first-of-type > .hti-history__copy {
+    align-self: start;
+  }
+  .hti-history__scene--2025 > .hti-history__entry--transition > .hti-history__copy {
+    align-self: end;
+  }
+  .hti-history__scene--2026 > .hti-history__closing > p,
+  .hti-history__scene--2026 > .hti-history__closing > .hti-history__cta {
+    align-self: end;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1600px) and (min-height: 551px) and (max-height: 800px) {
+  .hti-history__scene--1998 {
+    height: calc(100dvh - var(--history-nav-height));
+    align-content: start;
+  }
+}
+
+.hti-history .hti-history__nowrap { display: inline; white-space: nowrap; }
+.hti-history__scene--2025 strong { font-weight: 700; font-synthesis: weight; }
+
+/* Editorial motion: all final geometry remains owned by the approved rules. */
+.hti-history__chronology a { transition: color 320ms ease; }
+.hti-history__chronology a::after {
+  content: ''; position: absolute; bottom: .35rem; left: 0; right: 0;
+  height: 1px; background: var(--hti-red-active);
+  transform: scaleX(0); transform-origin: left; transition: transform 360ms ease;
+}
+.hti-history__chronology a { position: relative; }
+.hti-history__chronology a[aria-current]::after { transform: scaleX(1); }
+@media (prefers-reduced-motion: no-preference) {
+  .hti-history--motion { overflow-x: clip; }
+  .hti-history__motion {
+    --write-delay: 360ms; --write-duration: 640ms; --write-rise: 12px;
+    opacity: 0;
+  }
+  .hti-history__motion.is-written {
+    animation: hti-history-write var(--write-duration) cubic-bezier(.16, 1, .3, 1) var(--write-delay) both;
+  }
+  .hti-history__entry-heading > .hti-history__label,
+  .hti-history__entry-heading > .hti-history__place { --write-delay: 180ms; }
+  .hti-history__entry-heading > h3,
+  .hti-history__entry-heading > .hti-history__dan { --write-delay: 270ms; }
+  .hti-history__year.hti-history__motion {
+    --write-delay: 0ms; --write-duration: 820ms;
+    transform-origin: left center;
+  }
+  .hti-history__year.hti-history__motion.is-written { animation-name: hti-history-year-write; }
+  .hti-history__scene--2019 .hti-history__institution-name {
+    --write-delay: 580ms; --write-duration: 820ms;
+  }
+  .hti-history__scene--2019 .hti-history__entry--institution h3 { --write-delay: 700ms; }
+  .hti-history__scene--2019 .hti-history__entry--institution .hti-history__copy { --write-delay: 790ms; }
+  .hti-history__scene--2026 .hti-history__institution-name { --write-delay: 510ms; --write-duration: 780ms; }
+  .hti-history__scene--2026 #history-identity { --write-delay: 820ms; position: relative; }
+  .hti-history__scene--2026 #history-identity::before {
+    content: ''; position: absolute; left: 0; top: -.2rem; width: 3rem; height: 1px;
+    background: var(--hti-red-active); transform: scaleX(0); transform-origin: left;
+  }
+  .hti-history__scene--2026 #history-identity.is-written::before {
+    animation: hti-history-stroke 620ms cubic-bezier(.16, 1, .3, 1) 700ms both;
+  }
+  .hti-history__scene--2026 .hti-history__copy { --write-delay: 950ms; }
+  .hti-history__closing.hti-history__motion { --write-delay: 1180ms; --write-duration: 780ms; }
+  @keyframes hti-history-year-write {
+    from { opacity: 0; transform: translateY(-12px) scale(1.035); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes hti-history-write {
+    from { opacity: 0; transform: translateY(var(--write-rise)); clip-path: inset(0 0 12% 0); }
+    to { opacity: 1; transform: translateY(0); clip-path: inset(0); }
+  }
+  @keyframes hti-history-stroke { to { transform: scaleX(1); } }
+  @media (max-width: 900px) {
+    .hti-history__motion { --write-rise: 6px; --write-duration: 480ms; }
+    .hti-history__year.hti-history__motion { --write-duration: 700ms; }
+    @keyframes hti-history-year-write {
+      from { opacity: 0; transform: translateY(-6px) scale(1.02); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hti-history__chronology a, .hti-history__chronology a::after { transition: none; }
+  .hti-history { scroll-behavior: auto; }
 }

@@ -1830,3 +1830,31 @@
   }
   #hti-pertenencia .hti-institute__belonging-photo img { width: 100%; }
 }
+
+/* Mobile scroll replaces scene controls; keep their desktop behavior intact. */
+@media (max-width: 700px), (orientation: landscape) and (max-width: 1200px) and (max-height: 550px) {
+  .hti-institute .hti-institute__navigation { display: none; }
+
+  /* Contain the original panorama, with lateral room for its existing animation. */
+  #hti-innovacion::after {
+    height: auto;
+    aspect-ratio: 16 / 9;
+    background-size: 96% auto;
+  }
+  #hti-innovacion { padding-bottom: 2rem; }
+
+  /* The full community photograph travels inside a slightly wider frame. */
+  #hti-pertenencia .hti-institute__belonging-photo {
+    height: auto;
+    aspect-ratio: 16 / 10;
+    mask-image: none;
+    overflow: hidden;
+  }
+  #hti-pertenencia .hti-institute__belonging-photo img { object-fit: contain; }
+}
+
+@media (orientation: landscape) and (max-width: 1200px) and (max-height: 550px) {
+  .hti-institute { overflow-x: clip; }
+  #hti-filosofia { height: auto; --hti-institute-navigation-reserve: 0rem; }
+  #hti-filosofia .hti-institute__content { height: auto; }
+}

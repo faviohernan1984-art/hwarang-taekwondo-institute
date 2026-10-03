@@ -10,7 +10,7 @@ html { scrollbar-gutter: stable; }
 .nav a:hover, .nav a:focus-visible { color: var(--hti-white); }
 .nav a[aria-current]::after, .nav a:hover::after, .nav a:focus-visible::after { transform: scaleX(1); transform-origin: left; }
 .menu-toggle { display: none; }
-@media (max-width: 940px) {
+@media (max-width: 940px), (orientation: landscape) and (max-width: 1200px) and (max-height: 550px) {
   .site-header { position: absolute; padding: 1.5rem; }
   .menu-toggle { z-index: 2; display: grid; gap: 7px; width: 44px; height: 44px; place-content: center; border: 0; background: transparent; color: inherit; }
   .menu-toggle i { display: block; width: 25px; height: 1px; background: currentColor; transition: transform .25s; }
@@ -22,16 +22,16 @@ html { scrollbar-gutter: stable; }
 }
 @media (prefers-reduced-motion: reduce) { .nav, .nav a::after, .menu-toggle i { transition: none; } }
 
-/* Keep both ends reachable in the short-landscape menu. */
+/* Short landscape uses the vertical mobile menu, with every link reachable. */
 @media (orientation: landscape) and (max-width: 1200px) and (max-height: 550px) {
   .site-header { gap: 1.5rem; }
   .site-header .nav {
     min-width: 0;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: flex-start;
-    overflow-x: auto;
-    overflow-y: hidden;
-    padding-inline: 1.5rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: max(4.5rem, env(safe-area-inset-top)) 1.5rem max(1.5rem, env(safe-area-inset-bottom));
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
   }

@@ -365,3 +365,21 @@
   .hti-history__chronology a, .hti-history__chronology a::after { transition: none; }
   .hti-history { scroll-behavior: auto; }
 }
+
+/* Preserve all other scenes and formats; only rebalance 1998 in short landscape. */
+@media (orientation: landscape) and (max-width: 1200px) and (max-height: 550px) {
+  .hti-history .hti-history__scene--1998 > .hti-history__year {
+    align-self: start;
+    line-height: 1;
+    letter-spacing: -.025em;
+  }
+  .hti-history__scene--1998 > .hti-history__entry:first-of-type > .hti-history__entry-heading {
+    position: relative;
+    top: calc(-1 * clamp(3rem, 20dvh, 5rem));
+  }
+  .hti-history__scene--1998 > .hti-history__entry:first-of-type > .hti-history__copy,
+  .hti-history__scene--1998 > .hti-history__entry--note {
+    position: relative;
+    top: 1rem;
+  }
+}

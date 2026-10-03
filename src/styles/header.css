@@ -21,3 +21,20 @@ html { scrollbar-gutter: stable; }
   .nav a { font-size: .75rem; }
 }
 @media (prefers-reduced-motion: reduce) { .nav, .nav a::after, .menu-toggle i { transition: none; } }
+
+/* Keep both ends reachable in the short-landscape menu. */
+@media (orientation: landscape) and (max-width: 1200px) and (max-height: 550px) {
+  .site-header { gap: 1.5rem; }
+  .site-header .nav {
+    min-width: 0;
+    flex-direction: row;
+    justify-content: flex-start;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-inline: 1.5rem;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .site-header .nav::-webkit-scrollbar { display: none; }
+  .site-header .nav a { flex: 0 0 auto; white-space: nowrap; }
+}

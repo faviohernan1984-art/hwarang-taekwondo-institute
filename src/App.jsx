@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import Header from './components/Header.jsx'
 import Hero from './components/Hero.jsx'
 import Contact from './components/Contact.jsx'
+import PressSection from './components/PressSection.jsx'
 import HistoryPage from './components/HistoryPage.jsx'
 import EvolutionPage from './components/EvolutionPage.jsx'
 import SedesPage from './components/SedesPage.jsx'
@@ -149,6 +150,7 @@ export default function App() {
           <span id="programas" /><span id="sedes" /><span id="historia" />
           <span id="galeria" />
         </div>
+        <PressSection />
         <Contact />
       </main>}
     </div>
